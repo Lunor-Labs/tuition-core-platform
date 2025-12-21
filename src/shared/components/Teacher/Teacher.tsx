@@ -1,6 +1,6 @@
 import React from 'react';
 import './Teacher.css';
-import bg4 from '../assets/bg4.jpg';
+import bg4 from '../../../assets/bg4.jpg';
 
 const Teacher: React.FC = () => {
   return (

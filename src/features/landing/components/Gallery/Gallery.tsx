@@ -1,9 +1,9 @@
 import React from 'react';
 import './Gallery.css';
-import bgImage from '../assets/Bg.jpg';
-import bg2 from '../assets/bg2.jpg';
-import bg3 from '../assets/bg3.jpg';
-import bg4 from '../assets/bg4.jpg';
+import bgImage from '../../../../assets/Bg.jpg';
+import bg2 from '../../../../assets/bg2.jpg';
+import bg3 from '../../../../assets/bg3.jpg';
+import bg4 from '../../../../assets/bg4.jpg';
 
 const Gallery: React.FC = () => {
   const galleryImages = [

@@ -1,11 +1,6 @@
 import React from 'react';
 import './Process.css';
-
-interface ProcessStep {
-  icon: string;
-  title: string;
-  description: string;
-}
+import type { ProcessStep } from '../../../../shared/types';
 
 const Process: React.FC = () => {
   const steps: ProcessStep[] = [

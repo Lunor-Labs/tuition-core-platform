@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import './Reviews.css';
-
-interface Review {
-  id: number;
-  text: string;
-  name: string;
-  image: string;
-}
+import type { Review } from '../../../../shared/types';
 
 const Reviews: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

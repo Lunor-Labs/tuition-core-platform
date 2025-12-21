@@ -1,25 +1,18 @@
 import React, { useState } from 'react';
 import './Topstudent.css';
-import studentImage from '../assets/student1.png';
-
-interface Student {
-  rank: number;
-  name: string;
-  school: string;
-  marks: number;
-  image?: string;
-}
+import studentImage from '../../../../assets/student1.png';
+import type { TopStudent } from '../../../../shared/types';
 
 const Topstudent: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('2026 A/L Physics');
 
-  const topStudents: Student[] = [
+  const topStudents: TopStudent[] = [
     { rank: 1, name: 'Yasith Banula', school: 'Sri Sumangala Maha Vidyalaya', marks: 60, image: studentImage },
     { rank: 2, name: 'Yasith Banula', school: 'Sri Sumangala Maha Vidyalaya', marks: 60, image: studentImage },
     { rank: 3, name: 'Yasith Banula', school: 'Sri Sumangala Maha Vidyalaya', marks: 60, image: studentImage },
   ];
 
-  const remainingStudents: Student[] = [
+  const remainingStudents: TopStudent[] = [
     { rank: 4, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
     { rank: 5, name: 'Yasith Banula', school: '', marks: 60 },
     { rank: 6, name: 'Yasith Banula', school: '', marks: 60 },

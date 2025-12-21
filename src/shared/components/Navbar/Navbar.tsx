@@ -1,18 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Navbar.css';
+import { useScroll } from '../../hooks';
 
 const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const isScrolled = useScroll(50);
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>

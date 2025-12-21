@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Hero.css';
-import studentImage from '../assets/student1.png';
-import bgImage from '../assets/Bg.jpg';
-import bg2 from '../assets/bg2.jpg';
-import bg3 from '../assets/bg3.jpg';
-import bg4 from '../assets/bg4.jpg';
+import studentImage from '../../../../assets/student1.png';
+import bgImage from '../../../../assets/Bg.jpg';
+import bg2 from '../../../../assets/bg2.jpg';
+import bg3 from '../../../../assets/bg3.jpg';
+import bg4 from '../../../../assets/bg4.jpg';
 
 const Hero: React.FC = () => {
   const [currentBgIndex, setCurrentBgIndex] = useState(0);

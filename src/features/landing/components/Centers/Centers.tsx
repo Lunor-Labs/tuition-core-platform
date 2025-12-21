@@ -1,11 +1,6 @@
 import React from 'react';
 import './Centers.css';
-
-interface ClassCenter {
-  title: string;
-  buttonText: string;
-  image: string;
-}
+import type { ClassCenter } from '../../../../shared/types';
 
 const Centers: React.FC = () => {
   const centers: ClassCenter[] = [

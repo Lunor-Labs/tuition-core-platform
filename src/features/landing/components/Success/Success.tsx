@@ -1,14 +1,7 @@
 import React from 'react';
 import './Success.css';
-import studentImage from '../assets/student1.png';
-
-interface Student {
-  name: string;
-  year: string;
-  district: string;
-  subject: string;
-  grade: string;
-}
+import studentImage from '../../../../assets/student1.png';
+import type { Student } from '../../../../shared/types';
 
 const Success: React.FC = () => {
   const students: Student[] = [

@@ -1,8 +1,9 @@
 import React from 'react';
 import './Channels.css';
+import type { Channel } from '../../types';
 
 const Channels: React.FC = () => {
-  const channels = [
+  const channels: Channel[] = [
     {
       id: 1,
       year: '2027',
