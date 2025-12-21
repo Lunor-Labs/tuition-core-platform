@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Navbar.css';
 import { useScroll } from '../../hooks';
 
 const Navbar: React.FC = () => {
   const isScrolled = useScroll(50);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
@@ -20,14 +29,14 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Navigation Links */}
-        <ul className="navbar-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#success">Our Success</a></li>
-          <li><a href="#process">Our Process</a></li>
-          <li><a href="#top10">Top 10</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#reviews">Student Reviews</a></li>
-          <li><a href="#contact">Contact</a></li>
+        <ul className={`navbar-links ${isMenuOpen ? 'mobile-open' : ''}`}>
+          <li><a href="#home" onClick={closeMenu}>Home</a></li>
+          <li><a href="#success" onClick={closeMenu}>Our Success</a></li>
+          <li><a href="#process" onClick={closeMenu}>Our Process</a></li>
+          <li><a href="#top10" onClick={closeMenu}>Top 10</a></li>
+          <li><a href="#gallery" onClick={closeMenu}>Gallery</a></li>
+          <li><a href="#reviews" onClick={closeMenu}>Student Reviews</a></li>
+          <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
         </ul>
 
         {/* Auth Buttons */}
@@ -35,6 +44,17 @@ const Navbar: React.FC = () => {
           <button className="btn-login">Login</button>
           <button className="btn-signup">Sign Up</button>
         </div>
+
+        {/* Mobile Menu Toggle */}
+        <button 
+          className={`mobile-menu-toggle ${isMenuOpen ? 'active' : ''}`}
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </nav>
   );

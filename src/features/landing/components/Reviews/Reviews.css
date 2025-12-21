@@ -143,19 +143,26 @@
 
 @media (max-width: 768px) {
   .reviews-section {
-    padding: 60px 20px;
+    padding: 50px 1rem;
   }
 
   .reviews-header h2 {
-    font-size: 36px;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .reviews-header p {
+    font-size: 0.9rem;
   }
 
   .reviews-carousel {
-    gap: 20px;
+    gap: 15px;
+    padding: 0 0.5rem;
   }
 
   .reviews-cards {
     grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .review-card:nth-child(2),
@@ -164,15 +171,83 @@
   }
 
   .carousel-btn {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+  }
+
+  .carousel-btn svg {
+    width: 20px;
+    height: 20px;
   }
 
   .review-card {
-    padding: 30px 20px;
+    padding: 25px 18px;
   }
 
   .review-text {
-    font-size: 14px;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .reviewer-name {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .reviews-section {
+    padding: 40px 1rem;
+  }
+
+  .reviews-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .reviews-header p {
+    font-size: 0.85rem;
+  }
+
+  .reviews-carousel {
+    gap: 10px;
+  }
+
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carousel-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .review-card {
+    padding: 20px 15px;
+  }
+
+  .review-text {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .quote-icon {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 0.75rem;
+  }
+
+  .reviewer-info {
+    gap: 0.75rem;
+  }
+
+  .reviewer-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .reviewer-name {
+    font-size: 0.85rem;
   }
 }

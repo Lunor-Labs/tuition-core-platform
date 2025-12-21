@@ -153,32 +153,110 @@
   }
 
   .success-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
   .success-description {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
   }
 
   .success-profiles {
-    padding: 3rem 1.5rem;
+    padding: 2.5rem 1rem;
+  }
+
+  .success-profiles-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .success-profiles-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .success-profiles-container {
+    animation: scroll-horizontal 30s linear infinite;
+    width: auto;
   }
 
   .student-card {
-    min-width: 160px;
-    width: 160px;
+    min-width: 150px;
+    width: 150px;
+    padding: 0.875rem 0.5rem;
   }
 
   .student-image-wrapper {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 0.75rem;
+  }
+
+  .student-name {
+    font-size: 0.9rem;
+  }
+
+  .student-year,
+  .student-district {
+    font-size: 0.8rem;
+  }
+
+  .student-tag {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
   }
 }
 
 @media (max-width: 480px) {
+  .success-header {
+    padding: 2.5rem 1rem;
+  }
+
+  .success-title {
+    font-size: 1.5rem;
+  }
+
+  .success-description {
+    font-size: 0.8rem;
+  }
+
+  .success-profiles {
+    padding: 2rem 0.5rem;
+  }
+
+  .success-profiles-container {
+    animation: scroll-horizontal 25s linear infinite;
+  }
+
   .student-card {
-    min-width: 140px;
-    width: 140px;
+    min-width: 130px;
+    width: 130px;
+    padding: 0.75rem 0.4rem;
+  }
+
+  .student-image-wrapper {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 0.5rem;
+  }
+
+  .student-name {
+    font-size: 0.85rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .student-year,
+  .student-district {
+    font-size: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .student-district {
+    margin-bottom: 0.5rem;
+  }
+
+  .student-tag {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
   }
 }
 
