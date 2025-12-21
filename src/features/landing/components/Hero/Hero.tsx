@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Hero.css';
 import studentImage from '../../../../assets/student1.png';
 import bgImage from '../../../../assets/Bg.jpg';
@@ -8,7 +8,9 @@ import bg4 from '../../../../assets/bg4.jpg';
 
 const Hero: React.FC = () => {
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
-  const [fadeKey, setFadeKey] = useState(0);
+  // store previous bg index for cross-fade
+  const [prevBgIndex, setPrevBgIndex] = useState<number | null>(null);
+  const transitionTimerRef = useRef<number | null>(null);
 
   // Array of background images - add more images to this array
   const backgroundImages = [
@@ -18,41 +20,83 @@ const Hero: React.FC = () => {
     bg4
   ];
 
-  // Change background every 5 seconds
+  // Change background every 7 seconds with cross-fade
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentBgIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
-      setFadeKey((prev) => prev + 1);
-    }, 5000); // Change every 5 seconds
+      setCurrentBgIndex((prevIndex) => {
+        // set previous to the current before updating
+        setPrevBgIndex(prevIndex);
 
-    return () => clearInterval(interval);
+        const next = (prevIndex + 1) % backgroundImages.length;
+
+        // schedule clearing of previous after transition
+        if (transitionTimerRef.current) {
+          window.clearTimeout(transitionTimerRef.current);
+        }
+        transitionTimerRef.current = window.setTimeout(() => {
+          setPrevBgIndex(null);
+          transitionTimerRef.current = null;
+        }, 1200);
+
+        return next;
+      });
+    }, 7000); // Change every 7 seconds for smoother transitions
+
+    return () => {
+      clearInterval(interval);
+      if (transitionTimerRef.current) {
+        window.clearTimeout(transitionTimerRef.current);
+      }
+    };
   }, [backgroundImages.length]);
 
   const handleDotClick = (index: number) => {
+    if (index === currentBgIndex) return;
+    setPrevBgIndex(currentBgIndex);
     setCurrentBgIndex(index);
-    setFadeKey((prev) => prev + 1);
+
+    if (transitionTimerRef.current) {
+      window.clearTimeout(transitionTimerRef.current);
+    }
+    transitionTimerRef.current = window.setTimeout(() => {
+      setPrevBgIndex(null);
+      transitionTimerRef.current = null;
+    }, 1200);
   };
 
   return (
     <section className="hero">
-      <div 
-        key={fadeKey}
-        className="hero-background"
-        style={{
-          backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url(${backgroundImages[currentBgIndex]})`
-        }}
-      />
+      <div className="hero-background">
+        {/* previous image for cross-fade (if any) */}
+        {prevBgIndex !== null && (
+          <div
+            className="bg-image bg-image--hide"
+            style={{
+              backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%), url(${backgroundImages[prevBgIndex]})`
+            }}
+          />
+        )}
+
+        {/* current image */}
+        <div
+          className={`bg-image ${prevBgIndex !== null ? 'bg-image--show' : 'bg-image--visible'}`}
+          style={{
+            backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%), url(${backgroundImages[currentBgIndex]})`
+          }}
+        />
+      </div>
       <div className="hero-container">
         {/* Left Content */}
         <div className="hero-content">
           <h1 className="hero-title">
-            <span className="highlight">PHYSICS</span> Online is now much easier
+            <span className="highlight">Physics</span> made simple — learn online with expert tutors
           </h1>
           <p className="hero-description">
-            TOTC is an interesting platform that will teach you in more an interactive way
+            TOTC offers engaging live classes, guided practice and personalised feedback to help you
+            excel and build confidence — join a class today.
           </p>
           <div className="hero-buttons">
-            <button className="btn-join">Join for free</button>
+            <button className="btn-register" aria-label="Register for classes">Register for Classes</button>
             <button className="btn-watch">
               <div className="play-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -75,52 +119,7 @@ const Hero: React.FC = () => {
             />
           </div>
 
-          {/* Floating Cards */}
-          <div className="floating-card card-students">
-            <div className="card-icon calendar-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="6" width="18" height="15" rx="2" stroke="white" strokeWidth="2"/>
-                <path d="M3 10H21" stroke="white" strokeWidth="2"/>
-                <path d="M8 3V7M16 3V7" stroke="white" strokeWidth="2"/>
-              </svg>
-            </div>
-            <div className="card-content">
-              <div className="card-number">250k</div>
-              <div className="card-text">Assisted Student</div>
-            </div>
-          </div>
-
-          <div className="floating-card card-class">
-            <div className="card-header">
-              <div className="avatar">
-                <div className="avatar-status"></div>
-              </div>
-              <div>
-                <div className="class-title">User Experience Class</div>
-                <div className="class-time">Today at 12.00 PM</div>
-              </div>
-            </div>
-            <button className="btn-join-now">Join Now</button>
-          </div>
-
-          <div className="floating-card card-congrats">
-            <div className="card-icon mail-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="6" width="18" height="12" rx="2" stroke="white" strokeWidth="2"/>
-                <path d="M3 8L12 13L21 8" stroke="white" strokeWidth="2"/>
-              </svg>
-            </div>
-            <div className="card-content">
-              <div className="congrats-title">Congratulations</div>
-              <div className="congrats-text">Your admission completed</div>
-            </div>
-          </div>
-
-          <div className="floating-icon book-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-              <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/>
-            </svg>
-          </div>
+          {/* Floating cards removed for a cleaner hero — kept student image only */}
         </div>
       </div>
 

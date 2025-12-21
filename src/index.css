@@ -7,6 +7,9 @@
   line-height: 1.5;
   font-weight: 400;
 
+  /* Global navbar height used to offset fixed header from content */
+  --navbar-height: 80px;
+
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -15,6 +18,18 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --navbar-height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --navbar-height: 96px;
+  }
 }
 
 a {
