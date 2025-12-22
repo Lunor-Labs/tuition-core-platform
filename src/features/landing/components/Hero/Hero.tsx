@@ -102,6 +102,13 @@ const Hero: React.FC = () => {
             <button className="btn-register" aria-label="Register for classes" onClick={() => navigate('/register')}>Register for Classes</button>
           </div>
         </div>
+
+        {/* Right visual with student image */}
+        <div className="hero-visual">
+          <div className="student-image">
+            <img src={studentImage} alt="Student" />
+          </div>
+        </div>
       </div>
 
       {/* Carousel Dots */}

@@ -20,7 +20,7 @@ export function setupRecaptcha(containerId = 'recaptcha-container', size: 'invis
   // @ts-ignore
   if ((window as any).recaptchaVerifier) return (window as any).recaptchaVerifier;
 
-  const verifier = new RecaptchaVerifier(containerId, { size }, auth);
+  const verifier = new RecaptchaVerifier(auth, containerId, { size });
   // render may be needed by some builds; keep reference
   // @ts-ignore
   (window as any).recaptchaVerifier = verifier;
