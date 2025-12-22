@@ -7,4 +7,5 @@ export { default as Topstudent } from './Topstudent/Topstudent';
 export { default as Gallery } from './Gallery/Gallery';
 export { default as Reviews } from './Reviews/Reviews';
 export { default as Contact } from './Contact/Contact';
+export { AuthPanel } from './Auth';
 

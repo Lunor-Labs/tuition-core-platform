@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Navbar.css';
 import { useScroll } from '../../hooks';
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const isScrolled = useScroll(50);
@@ -61,8 +62,8 @@ const Navbar: React.FC = () => {
 
         {/* Auth Buttons */}
         <div className="navbar-buttons">
-          <button className="btn-login">Login</button>
-          <button className="btn-signup">Sign Up</button>
+          <Link to="/login" className="btn-login">Login</Link>
+          <Link to="/register" className="btn-signup">Sign Up</Link>
         </div>
 
         {/* Mobile Menu Toggle */}

@@ -5,12 +5,15 @@ import bgImage from '../../../../assets/Bg.jpg';
 import bg2 from '../../../../assets/bg2.jpg';
 import bg3 from '../../../../assets/bg3.jpg';
 import bg4 from '../../../../assets/bg4.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const Hero: React.FC = () => {
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   // store previous bg index for cross-fade
   const [prevBgIndex, setPrevBgIndex] = useState<number | null>(null);
   const transitionTimerRef = useRef<number | null>(null);
+
+  const navigate = useNavigate();
 
   // Array of background images - add more images to this array
   const backgroundImages = [
@@ -96,30 +99,8 @@ const Hero: React.FC = () => {
             excel and build confidence — join a class today.
           </p>
           <div className="hero-buttons">
-            <button className="btn-register" aria-label="Register for classes">Register for Classes</button>
-            <button className="btn-watch">
-              <div className="play-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="11" fill="white" />
-                  <path d="M10 8L16 12L10 16V8Z" fill="#2196F3" />
-                </svg>
-              </div>
-              Watch how it works
-            </button>
+            <button className="btn-register" aria-label="Register for classes" onClick={() => navigate('/register')}>Register for Classes</button>
           </div>
-        </div>
-
-        {/* Right Content - Student Image & Cards */}
-        <div className="hero-visual">
-          {/* Student Image Placeholder */}
-          <div className="student-image">
-            <img 
-              src={studentImage} 
-              alt="Student" 
-            />
-          </div>
-
-          {/* Floating cards removed for a cleaner hero — kept student image only */}
         </div>
       </div>
 

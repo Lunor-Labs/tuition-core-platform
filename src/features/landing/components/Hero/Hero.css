@@ -177,14 +177,13 @@
 
 .student-image {
   position: absolute;
-  right: 60px;
+  right: 340px;
   top: 62%;
   transform: translateY(-50%);
   width: 520px;
   height: 640px;
   border-radius: 20px;
   overflow: hidden;
-  
 }
 
 .student-image img {
@@ -192,6 +191,20 @@
   height: 100%;
   object-fit: cover;
 }
+
+.auth-side {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+}
+
+.hero-auth-quick{ background: rgba(255,255,255,0.98); padding:12px 16px; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.08); max-width:240px }
+.hero-auth-quick .welcome-small{ margin:0 0 8px 0; color:#0f172a; font-weight:600; text-align:center }
+.hero-auth-buttons{ display:flex; gap:8px; justify-content:center }
+.hero-auth-buttons .btn-register{ padding:8px 12px; font-size:14px }
+.hero-auth-buttons .btn-watch{ padding:8px 12px; font-size:14px }
 
 /* Floating card visuals removed — simplified hero */
 

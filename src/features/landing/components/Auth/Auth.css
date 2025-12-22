@@ -1,0 +1,40 @@
+.auth-panel {
+  width: 420px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.auth-brand .logo {
+  text-align: center;
+  font-weight: 700;
+  color: #11b8b1;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.auth-toggle { display:flex; gap:8px; justify-content:center; margin-bottom:12px }
+.auth-toggle button{ background:#f3f7f7; border:none; padding:8px 18px; border-radius:20px }
+.auth-toggle button.active{ background:#11b8b1; color:white }
+
+.auth-form { display:flex; flex-direction:column; gap:8px }
+.auth-form label{ font-size:12px; color:#666 }
+.auth-form input{ padding:10px 12px; border-radius:999px; border:1px solid #e6f2f1 }
+.btn-otp{ margin-top:4px; background:#fff; border:1px solid #11b8b1; color:#11b8b1; padding:8px 12px; border-radius:20px }
+.btn-submit{ margin-top:8px; background:#11b8b1; color:white; border:none; padding:10px; border-radius:20px }
+.divider{ text-align:center; margin:8px 0; color:#bbb }
+.auth-footer{ text-align:center; margin-top:8px }
+.link{ background:none; border:none; color:#11b8b1; cursor:pointer }
+.auth-error{ color:#c0392b; font-size:13px }
+
+.otp-inputs input{ width:100%; padding:12px; text-align:center }
