@@ -2,11 +2,22 @@ import React, { useState } from 'react';
 import './Auth.css';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-import VerifyOtp from './VerifyOtp';
 
 const AuthPanel: React.FC = () => {
-  const [mode, setMode] = useState<'login' | 'register' | 'verify'>('login');
-  const [otpInfo, setOtpInfo] = useState<any>(null);
+  const [mode, setMode] = useState<'login' | 'register'>('login');
+
+  const handleLoginSuccess = () => {
+    // Handle successful login - redirect or update app state
+    console.log('Login successful');
+    // You can add navigation logic here, e.g., window.location.href = '/dashboard'
+  };
+
+  const handleRegisterSuccess = () => {
+    // Handle successful registration - redirect or update app state
+    console.log('Registration successful');
+    // You can add navigation logic here, e.g., setMode('login')
+    setMode('login');
+  };
 
   return (
     <div className="auth-panel">
@@ -21,9 +32,18 @@ const AuthPanel: React.FC = () => {
         </div>
 
         <div className="auth-body">
-          {mode === 'login' && <LoginForm onSwitchToRegister={() => setMode('register')} onRequestOtp={(info: any) => { setOtpInfo(info); setMode('verify'); }} />}
-          {mode === 'register' && <RegisterForm onSwitchToLogin={() => setMode('login')} onRequestOtp={(info: any) => { setOtpInfo(info); setMode('verify'); }} />}
-          {mode === 'verify' && <VerifyOtp otpInfo={otpInfo} onDone={() => setMode('login')} />}
+          {mode === 'login' && (
+            <LoginForm 
+              onSwitchToRegister={() => setMode('register')} 
+              onLoginSuccess={handleLoginSuccess}
+            />
+          )}
+          {mode === 'register' && (
+            <RegisterForm 
+              onSwitchToLogin={() => setMode('login')} 
+              onRegisterSuccess={handleRegisterSuccess}
+            />
+          )}
         </div>
 
         <div id="recaptcha-container" />

@@ -1,62 +1,236 @@
 import React, { useState } from 'react';
-import { registerWithEmail, sendOtpToPhone } from '../../../../shared/services/auth';
+import { registerWithMobile, sendOtpViaApi, verifyOtpViaApi } from '../../../../shared/services/auth';
 
 interface Props {
   onSwitchToLogin: () => void;
-  onRequestOtp: (info: any) => void;
+  onRegisterSuccess?: () => void;
 }
 
-const RegisterForm: React.FC<Props> = ({ onSwitchToLogin, onRequestOtp }) => {
+const RegisterForm: React.FC<Props> = ({ onSwitchToLogin, onRegisterSuccess }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [otp, setOtp] = useState('');
+  const [registerMethod, setRegisterMethod] = useState<'password' | 'otp'>('password');
+  const [otpSent, setOtpSent] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handlePasswordRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!mobileNumber || !password) {
+      setError('Please enter mobile number and password');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
     try {
-      await registerWithEmail(email, password);
-      // TODO: save profile fields server-side if needed
+      await registerWithMobile(mobileNumber, password);
+      // TODO: save profile fields (firstName, lastName) server-side if needed
+      onRegisterSuccess?.();
     } catch (err: any) {
-      setError(err.message || 'Registration failed');
+      setError(err.message || 'Registration failed. Mobile number may already be registered.');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!mobileNumber) {
+      setError('Please enter your mobile number');
+      return;
+    }
+
+    setLoading(true);
     setError(null);
     try {
-      const confirmation = await sendOtpToPhone(phone);
-      onRequestOtp(confirmation);
+      await sendOtpViaApi(mobileNumber);
+      setOtpSent(true);
+      setRegisterMethod('otp');
     } catch (err: any) {
-      setError(err.message || 'Could not send OTP');
+      setError(err.message || 'Could not send OTP. Please try again.');
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleOtpRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!mobileNumber || !otp) {
+      setError('Please enter mobile number and OTP');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    try {
+      await verifyOtpViaApi(mobileNumber, otp);
+      // TODO: save profile fields (firstName, lastName) server-side if needed
+      onRegisterSuccess?.();
+    } catch (err: any) {
+      setError(err.message || 'OTP verification failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    setOtpSent(false);
+    setOtp('');
+    await handleSendOtp(new Event('submit') as any);
   };
 
   return (
     <div>
-      <form onSubmit={handleRegister} className="auth-form">
+      <form 
+        onSubmit={registerMethod === 'password' ? handlePasswordRegister : handleOtpRegister} 
+        className="auth-form"
+      >
         <label>First Name</label>
-        <input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+        <input 
+          value={firstName} 
+          onChange={(e) => setFirstName(e.target.value)} 
+          placeholder="First Name"
+          disabled={loading}
+        />
+        
         <label>Last Name</label>
-        <input value={lastName} onChange={(e) => setLastName(e.target.value)} />
+        <input 
+          value={lastName} 
+          onChange={(e) => setLastName(e.target.value)} 
+          placeholder="Last Name"
+          disabled={loading}
+        />
 
-        <label>Mobile Number</label>
-        <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+911234567890" />
-        <button type="button" className="btn-otp" onClick={handleSendOtp}>Send OTP</button>
+        <label>Mobile Number (Username)</label>
+        <input 
+          type="tel"
+          value={mobileNumber} 
+          onChange={(e) => setMobileNumber(e.target.value)} 
+          placeholder="+911234567890"
+          required
+          disabled={loading}
+        />
 
-        <div className="divider">OR</div>
-
-        <label>Email</label>
-        <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@domain.com" />
-        <label>Password</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+        {registerMethod === 'password' ? (
+          <>
+            <label>Password</label>
+            <input 
+              type="password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              placeholder="Create a password (min 6 characters)"
+              required
+              disabled={loading}
+            />
+            <label>Confirm Password</label>
+            <input 
+              type="password" 
+              value={confirmPassword} 
+              onChange={(e) => setConfirmPassword(e.target.value)} 
+              placeholder="Confirm your password"
+              required
+              disabled={loading}
+            />
+            <div className="auth-options">
+              <button 
+                type="button" 
+                className="btn-link" 
+                onClick={handleSendOtp}
+                disabled={loading}
+              >
+                Register with OTP instead
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            {!otpSent ? (
+              <>
+                <button 
+                  type="button" 
+                  className="btn-otp" 
+                  onClick={handleSendOtp}
+                  disabled={loading}
+                >
+                  {loading ? 'Sending...' : 'Send OTP'}
+                </button>
+                <div className="auth-options">
+                  <button 
+                    type="button" 
+                    className="btn-link" 
+                    onClick={() => setRegisterMethod('password')}
+                    disabled={loading}
+                  >
+                    Register with Password instead
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <label>Enter OTP</label>
+                <input 
+                  type="text" 
+                  value={otp} 
+                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))} 
+                  placeholder="123456"
+                  maxLength={6}
+                  required
+                  disabled={loading}
+                />
+                <div className="auth-options">
+                  <button 
+                    type="button" 
+                    className="btn-link" 
+                    onClick={handleResendOtp}
+                    disabled={loading}
+                  >
+                    Resend OTP
+                  </button>
+                  <button 
+                    type="button" 
+                    className="btn-link" 
+                    onClick={() => {
+                      setRegisterMethod('password');
+                      setOtpSent(false);
+                      setOtp('');
+                    }}
+                    disabled={loading}
+                  >
+                    Use Password instead
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        )}
 
         {error && <div className="auth-error">{error}</div>}
 
-        <button className="btn-submit" type="submit">Register</button>
+        {(registerMethod === 'password' || otpSent) && (
+          <button 
+            className="btn-submit" 
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? 'Registering...' : 'Register'}
+          </button>
+        )}
       </form>
 
       <div className="auth-footer">

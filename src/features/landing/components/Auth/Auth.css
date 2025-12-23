@@ -38,3 +38,29 @@
 .auth-error{ color:#c0392b; font-size:13px }
 
 .otp-inputs input{ width:100%; padding:12px; text-align:center }
+
+.auth-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #11b8b1;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: left;
+  padding: 4px 0;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.btn-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
