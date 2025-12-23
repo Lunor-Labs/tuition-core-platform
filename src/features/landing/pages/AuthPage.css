@@ -1,3 +1,131 @@
-.auth-page{ display:flex; align-items:center; justify-content:center; min-height:80vh; padding:2rem }
-.auth-wrapper{ width:420px; max-width:96%; background:white; padding:20px; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.06) }
-.auth-wrapper h2{ margin:0 0 12px 0; color:#0f172a }
+.auth-page {
+  display: flex;
+  min-height: 100vh;
+  background: #fffefc;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Left Side - Image */
+.auth-left {
+  flex: 0 0 50%;
+  position: relative;
+  padding: 38px 41px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 731px;
+  height: calc(100vh - 76px);
+  min-height: 600px;
+  border-radius: 29px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.auth-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 29px;
+}
+
+.auth-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 60px 40px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  border-radius: 0 0 29px 29px;
+}
+
+.auth-overlay-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 37px;
+  color: white;
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+}
+
+.auth-overlay-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 25px;
+  color: white;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Right Side - Form */
+.auth-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #fffefc;
+}
+
+.auth-wrapper {
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.auth-wrapper h2 {
+  margin: 0 0 24px 0;
+  color: #0f172a;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .auth-page {
+    flex-direction: column;
+  }
+
+  .auth-left {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 20px;
+    min-height: 400px;
+  }
+
+  .auth-image-container {
+    height: 400px;
+    max-width: 100%;
+  }
+
+  .auth-right {
+    padding: 20px;
+  }
+
+  .auth-wrapper {
+    max-width: 100%;
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-overlay-title {
+    font-size: 28px;
+  }
+
+  .auth-overlay-subtitle {
+    font-size: 20px;
+  }
+
+  .auth-image-overlay {
+    padding: 40px 20px;
+  }
+}
