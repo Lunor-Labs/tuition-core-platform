@@ -21,7 +21,14 @@ export class TwilioProvider implements SMSProvider {
   private fromNumber: string;
 
   constructor() {
-    const twilio = require('twilio');
+    // Dynamic import to avoid build errors if twilio is not installed
+    let twilio: any;
+    try {
+      twilio = require('twilio');
+    } catch (e) {
+      throw new Error('Twilio package not installed. Run: npm install twilio');
+    }
+    
     const config = functions.config();
     
     if (!config.twilio?.sid || !config.twilio?.auth_token) {
@@ -48,7 +55,14 @@ export class AWSSNSProvider implements SMSProvider {
   private sns: any;
 
   constructor() {
-    const AWS = require('aws-sdk');
+    // Dynamic import to avoid build errors if aws-sdk is not installed
+    let AWS: any;
+    try {
+      AWS = require('aws-sdk');
+    } catch (e) {
+      throw new Error('AWS SDK not installed. Run: npm install aws-sdk');
+    }
+    
     const config = functions.config();
 
     if (!config.aws?.access_key_id || !config.aws?.secret_access_key) {
@@ -77,7 +91,14 @@ export class VonageProvider implements SMSProvider {
   private vonage: any;
 
   constructor() {
-    const Vonage = require('@vonage/server-sdk');
+    // Dynamic import to avoid build errors if @vonage/server-sdk is not installed
+    let Vonage: any;
+    try {
+      Vonage = require('@vonage/server-sdk');
+    } catch (e) {
+      throw new Error('Vonage SDK not installed. Run: npm install @vonage/server-sdk');
+    }
+    
     const config = functions.config();
 
     if (!config.vonage?.api_key || !config.vonage?.api_secret) {

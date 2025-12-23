@@ -1,14 +1,7 @@
 // API client configuration and utilities
 
-// Firebase Cloud Functions base URL
-// Format: https://{region}-{project-id}.cloudfunctions.net
-// Or use environment variable: VITE_FIREBASE_FUNCTIONS_URL
-const FIREBASE_FUNCTIONS_URL = 
-  import.meta.env.VITE_FIREBASE_FUNCTIONS_URL || 
-  import.meta.env.VITE_API_BASE_URL || 
-  '';
-
 // Use Cloud Functions for auth endpoints, fallback to /api for others
+// Note: Firebase Functions URL is configured in auth.ts, not here
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 /**

@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import * as cors from 'cors';
+import cors from 'cors';
 import { Request, Response } from 'express';
 
 // Initialize Firebase Admin
@@ -54,6 +54,7 @@ export const sendOtp = functions.https.onRequest((request: Request, response: Re
 
       // Send SMS via cost-effective provider
       try {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         const { getSMSProvider } = require('./utils/sms');
         const smsProvider = getSMSProvider();
         
