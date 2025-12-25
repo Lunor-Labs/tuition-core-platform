@@ -7,8 +7,8 @@ import './Tests.css';
 const mockTests: Test[] = [
   {
     id: '1',
-    title: 'Algebra Fundamentals Quiz',
-    description: 'Test basic algebraic concepts and problem-solving skills',
+    title: 'Mechanics Fundamentals Quiz',
+    description: 'Test understanding of force, motion, and energy concepts',
     lessonId: '1',
     questions: [],
     totalMarks: 50,
@@ -22,9 +22,9 @@ const mockTests: Test[] = [
   },
   {
     id: '2',
-    title: 'Geometry Shapes Test',
-    description: 'Identify and calculate properties of geometric shapes',
-    lessonId: '3',
+    title: 'Thermodynamics Assessment',
+    description: 'Evaluate understanding of heat transfer and energy conservation',
+    lessonId: '2',
     questions: [],
     totalMarks: 40,
     duration: 25,
@@ -35,9 +35,9 @@ const mockTests: Test[] = [
   },
   {
     id: '3',
-    title: 'Trigonometry Practice Test',
-    description: 'Apply trigonometric functions to solve problems',
-    lessonId: '4',
+    title: 'Electromagnetic Physics Test',
+    description: 'Assess knowledge of electric and magnetic field interactions',
+    lessonId: '3',
     questions: [],
     totalMarks: 60,
     duration: 45,

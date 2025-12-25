@@ -121,6 +121,5 @@ export interface DashboardStats {
   totalStudents: number;
   upcomingLessons: number;
   totalTests: number;
-  recentSubmissions: Submission[];
 }
 

@@ -11,7 +11,7 @@ const TeacherPortal: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Navigate to="/teacher/dashboard" replace />} />
+        <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="create-lesson" element={<CreateLesson />} />
         <Route path="lessons" element={<Lessons />} />

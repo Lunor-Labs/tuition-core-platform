@@ -7,41 +7,41 @@ import './Lessons.css';
 const mockLessons: Lesson[] = [
   {
     id: '1',
-    title: 'Introduction to Algebra',
-    description: 'Learn the basics of algebraic expressions and equations',
+    title: 'Newton\'s Laws of Motion',
+    description: 'Understanding the fundamental principles of classical mechanics',
     date: '2024-12-25',
     time: '10:00',
     duration: 60,
     resources: [
-      { id: 'r1', name: 'Algebra Basics.pdf', type: 'document', url: '#' },
-      { id: 'r2', name: 'algebra-intro.mp4', type: 'video', url: '#' }
+      { id: 'r1', name: 'Newtons-Laws.pdf', type: 'document', url: '#' },
+      { id: 'r2', name: 'motion-examples.mp4', type: 'video', url: '#' }
     ],
     createdAt: '2024-12-20T08:00:00Z',
     updatedAt: '2024-12-20T08:00:00Z'
   },
   {
     id: '2',
-    title: 'Quadratic Equations',
-    description: 'Solving quadratic equations using different methods',
+    title: 'Thermodynamics Fundamentals',
+    description: 'Exploring heat, work, and energy transformations',
     date: '2024-12-26',
     time: '14:00',
     duration: 45,
     resources: [
-      { id: 'r3', name: 'quadratic-formula.pdf', type: 'document', url: '#' }
+      { id: 'r3', name: 'thermo-laws.pdf', type: 'document', url: '#' }
     ],
     createdAt: '2024-12-21T10:30:00Z',
     updatedAt: '2024-12-21T10:30:00Z'
   },
   {
     id: '3',
-    title: 'Geometry Basics',
-    description: 'Understanding shapes, angles, and basic geometric principles',
+    title: 'Electricity and Magnetism',
+    description: 'Understanding electromagnetic forces and their applications',
     date: '2024-12-27',
     time: '11:00',
     duration: 75,
     resources: [
-      { id: 'r4', name: 'shapes-diagram.png', type: 'image', url: '#' },
-      { id: 'r5', name: 'geometry-guide.pdf', type: 'document', url: '#' }
+      { id: 'r4', name: 'electromagnetic-diagram.png', type: 'image', url: '#' },
+      { id: 'r5', name: 'emf-guide.pdf', type: 'document', url: '#' }
     ],
     createdAt: '2024-12-22T14:15:00Z',
     updatedAt: '2024-12-23T16:45:00Z'

@@ -164,7 +164,8 @@ const CreateLesson: React.FC = () => {
         <form onSubmit={handleSubmit} className="lesson-form">
           {/* Basic Information */}
           <div className="form-section">
-            <h2 className="section-title">Basic Information</h2>
+            <h2 className="section-title">📝 Basic Information</h2>
+            <p className="section-subtitle">Provide essential details about your lesson to help students understand what they'll learn.</p>
 
             <div className="form-group">
               <label htmlFor="title" className="form-label">Lesson Title *</label>
@@ -175,7 +176,7 @@ const CreateLesson: React.FC = () => {
                 value={formData.title}
                 onChange={handleInputChange}
                 className="form-input"
-                placeholder="Enter lesson title"
+                placeholder="e.g., Newton's Laws of Motion"
                 required
               />
             </div>
@@ -188,7 +189,7 @@ const CreateLesson: React.FC = () => {
                 value={formData.description}
                 onChange={handleInputChange}
                 className="form-textarea"
-                placeholder="Describe what students will learn in this lesson"
+                placeholder="Describe the physics concepts, key principles, and learning objectives students will master..."
                 rows={4}
               />
             </div>
@@ -196,11 +197,12 @@ const CreateLesson: React.FC = () => {
 
           {/* Schedule */}
           <div className="form-section">
-            <h2 className="section-title">Schedule</h2>
+            <h2 className="section-title">📅 Schedule & Duration</h2>
+            <p className="section-subtitle">Set the timing and duration for your lesson session.</p>
 
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="date" className="form-label">Date *</label>
+                <label htmlFor="date" className="form-label emoji-label">📅 Date *</label>
                 <input
                   type="date"
                   id="date"
@@ -214,7 +216,7 @@ const CreateLesson: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="time" className="form-label">Time *</label>
+                <label htmlFor="time" className="form-label emoji-label">⏰ Time *</label>
                 <input
                   type="time"
                   id="time"
@@ -227,7 +229,7 @@ const CreateLesson: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="duration" className="form-label">Duration (minutes)</label>
+                <label htmlFor="duration" className="form-label">⏱️ Duration</label>
                 <select
                   id="duration"
                   name="duration"
@@ -248,8 +250,8 @@ const CreateLesson: React.FC = () => {
 
           {/* Resources */}
           <div className="form-section">
-            <h2 className="section-title">Resources</h2>
-            <p className="section-subtitle">Upload files, images, or videos to support your lesson.</p>
+            <h2 className="section-title">📎 Learning Resources</h2>
+            <p className="section-subtitle">Upload supplementary materials like documents, images, or videos to enhance your lesson.</p>
 
             {/* File Upload Area */}
             <div
@@ -277,7 +279,12 @@ const CreateLesson: React.FC = () => {
                 onChange={(e) => handleFileUpload(e.target.files)}
                 className="file-input"
               />
-              <label htmlFor="file-upload" className="file-upload-label">Choose Files</label>
+              <label htmlFor="file-upload" className="file-upload-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Choose Files
+              </label>
             </div>
 
             {/* Uploaded Resources */}
@@ -316,9 +323,15 @@ const CreateLesson: React.FC = () => {
           {/* Form Actions */}
           <div className="form-actions">
             <button type="button" className="btn-secondary" onClick={() => window.history.back()}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
               Cancel
             </button>
             <button type="submit" className="btn-primary" disabled={isSubmitting}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
               {isSubmitting ? 'Creating Lesson...' : 'Create Lesson'}
             </button>
           </div>

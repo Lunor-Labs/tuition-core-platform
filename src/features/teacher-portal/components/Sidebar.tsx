@@ -13,7 +13,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
   const menuItems = [
     {
       id: 'dashboard',
-      path: '/teacher/dashboard',
+      path: 'dashboard',
       label: 'Dashboard',
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     },
     {
       id: 'create-lesson',
-      path: '/teacher/create-lesson',
+      path: 'create-lesson',
       label: 'Create Lesson',
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     },
     {
       id: 'lessons',
-      path: '/teacher/lessons',
+      path: 'lessons',
       label: 'Lessons',
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     },
     {
       id: 'tests',
-      path: '/teacher/tests',
+      path: 'tests',
       label: 'Tests',
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     },
     {
       id: 'settings',
-      path: '/teacher/settings',
+      path: 'settings',
       label: 'Settings',
       icon: (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
