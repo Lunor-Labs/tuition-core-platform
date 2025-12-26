@@ -31,14 +31,20 @@ const Channels: React.FC = () => {
   ];
 
   return (
-    <footer className="channels-section">
-      <div className="channels-container">
-        <div className="channels-header">
-          <h2>Our Telegram Channels</h2>
-          <p>Ornare id fames interdum porttitor nulla turpis etiam. Diam vitae sollicitudin at nec nam et pharetra gravida. Adipiscing a quis ultrices eu ornare tristique vel nisl orci.</p>
+    <section className="channels-section" id="channels">
+      {/* Header Section */}
+      <div className="channels-header">
+        <div className="channels-header-container">
+          <h2 className="channels-title">Our Telegram Channels</h2>
+          <p className="channels-description">
+            Ornare id fames interdum porttitor nulla turpis etiam. Diam vitae sollicitudin at nec nam et pharetra gravida. Adipiscing a quis ultrices eu ornare tristique vel nisl orci.
+          </p>
         </div>
+      </div>
 
-        <div className="channels-cards">
+      {/* Cards Section */}
+      <div className="channels-content">
+        <div className="channels-container">
           {channels.map((channel) => (
             <a href={channel.link} key={channel.id} className="channel-card" target="_blank" rel="noopener noreferrer">
               <div className="telegram-icon">
@@ -60,8 +66,10 @@ const Channels: React.FC = () => {
             </a>
           ))}
         </div>
+      </div>
 
-        <div className="footer-content">
+      {/* Footer Content */}
+      <footer className="footer-content">
           <div className="social-links">
             <a href="#" className="social-icon" aria-label="Facebook">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,9 +105,8 @@ const Channels: React.FC = () => {
           </div>
 
           <p className="copyright">© 2025 Lunor Labs Pvt Ltd.</p>
-        </div>
-      </div>
-    </footer>
+        </footer>
+    </section>
   );
 };
 

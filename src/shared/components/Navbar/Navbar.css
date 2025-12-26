@@ -103,11 +103,13 @@
 .logo-text {
   font-size: 1.75rem;
   font-weight: 800;
-  color: #ffffff;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: 0.1em;
   transition: all 0.3s ease;
   position: relative;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .navbar.scrolled .logo-text {
@@ -115,7 +117,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: none;
 }
 
 .navbar-logo:hover .logo-text {
@@ -151,7 +152,7 @@
 }
 
 .navbar-links a {
-  color: #475569;
+  color: #1e293b;
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 600;
@@ -184,16 +185,14 @@
 }
 
 .navbar-links a:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.2);
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
   transform: translateY(-2px);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .navbar.scrolled .navbar-links a:hover {
   color: #3b82f6;
   background: rgba(59, 130, 246, 0.1);
-  text-shadow: none;
 }
 
 .navbar-links a::after {
@@ -204,11 +203,12 @@
   transform: translateX(-50%);
   width: 0;
   height: 3px;
-  background: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0.8));
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
   background-size: 200% 100%;
   border-radius: 2px;
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
+  animation: gradientShift 3s ease infinite;
 }
 
 .navbar.scrolled .navbar-links a::after {
@@ -297,9 +297,9 @@
 }
 
 .btn-login {
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.95);
+  color: #1e293b;
+  border: 2px solid rgba(59, 130, 246, 0.3);
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -311,11 +311,11 @@
 }
 
 .btn-login:hover {
-  background: rgba(255, 255, 255, 0.3);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: white;
+  border-color: transparent;
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
 }
 
 .navbar.scrolled .btn-login:hover {
