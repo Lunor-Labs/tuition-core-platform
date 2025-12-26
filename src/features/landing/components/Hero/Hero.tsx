@@ -1,39 +1,40 @@
 import React from 'react';
 import './Hero.css';
 import studentImage from '../../../../assets/web mobile.png';
-import { useNavigate } from 'react-router-dom';
+/* import { useNavigate } from 'react-router-dom'; */
 
 const Hero: React.FC = () => {
-  const navigate = useNavigate();
+  /* const navigate = useNavigate(); */
 
   return (
-    <section className="hero">
+    <section className="hero" id="home">
+      {/* Floating particles */}
+      <div className="floating-particles">
+        <div className="particle particle-1"></div>
+        <div className="particle particle-2"></div>
+        <div className="particle particle-3"></div>
+        <div className="particle particle-4"></div>
+        <div className="particle particle-5"></div>
+      </div>
+
       <div className="hero-container">
         {/* Left Content */}
         <div className="hero-content">
-          <h1 className="hero-title">
-            <span className="highlight">Physics</span> made simple
+          <div className="hero-certificate-text">GENERAL CERTIFICATE OF EDUCATION ADVANCED LEVEL</div>
+          <h1 className="hero-title-physics">
+            <span className="physics-online">ONLINE PHYSICS</span>
           </h1>
-          <h2 className="hero-subtitle">learn online with expert tutors</h2>
-          <p className="hero-description">
-            TOTC offers engaging live classes, guided practice and personalised feedback to help you
-            excel and build confidence — join a class today.
-          </p>
-          <div className="hero-buttons">
-            <button className="btn-primary" onClick={() => navigate('/register')}>
-              Register for Classes
-            </button>
-            <button className="btn-secondary" onClick={() => navigate('/login')}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Contact us
-            </button>
-          </div>
+          <div className="hero-instructor-name">අමිල සී.එදිරිමාන්න</div>
+          <div className="hero-guarantee-english">Excellent Results are Our Guarantee</div>
+          <div className="hero-guarantee-sinhala">විශිෂ්ට ප්‍රතිඵල, අපගේ සහතිකයයි...</div>
         </div>
 
         {/* Right visual with student image */}
         <div className="hero-visual">
+          <div className="decorative-blob blob-top-left"></div>
+          <div className="decorative-blob blob-bottom-right"></div>
+          <div className="geometric-triangle triangle-1"></div>
+          <div className="geometric-triangle triangle-2"></div>
           <div className="student-image">
             <img src={studentImage} alt="Student" />
           </div>
