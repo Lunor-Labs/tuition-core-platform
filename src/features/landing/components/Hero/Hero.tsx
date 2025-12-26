@@ -1,6 +1,6 @@
 import React from 'react';
 import './Hero.css';
-import studentImage from '../../../../assets/student1.png';
+import studentImage from '../../../../assets/web mobile.png';
 import { useNavigate } from 'react-router-dom';
 
 const Hero: React.FC = () => {
@@ -29,9 +29,6 @@ const Hero: React.FC = () => {
               </svg>
               Contact us
             </button>
-          </div>
-          <div className="hero-badge">
-            <span className="badge-icon">🎓</span> Sri Lankan leading online tutoring platform
           </div>
         </div>
 
