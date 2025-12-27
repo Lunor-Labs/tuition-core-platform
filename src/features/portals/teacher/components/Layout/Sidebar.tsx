@@ -1,21 +1,43 @@
 
 import React from 'react';
 
-const NavItem: React.FC<{ icon: string; label: string; active?: boolean; filled?: boolean }> = ({ icon, label, active, filled }) => (
-  <a 
-    href="#" 
-    className={`flex items-center gap-4 px-4 py-3 rounded-full transition-all group ${
+interface NavItemProps {
+  icon: string;
+  label: string;
+  active?: boolean;
+  filled?: boolean;
+  onClick?: () => void;
+}
+
+const NavItem: React.FC<NavItemProps> = ({ icon, label, active, filled, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`flex items-center gap-4 px-4 py-3 rounded-full transition-all group w-full text-left focus:outline-none ${
       active 
         ? 'bg-white text-teal-sidebar shadow-md' 
-        : 'text-teal-100 hover:bg-white/10 hover:text-white'
+        : 'text-teal-100 bg-white/10 hover:text-white'
     }`}
   >
     <span className={`material-symbols-outlined ${filled ? 'icon-filled' : ''}`}>{icon}</span>
     <span className="font-medium text-sm hidden lg:block">{label}</span>
-  </a>
+  </button>
 );
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
+  const navItems = [
+    { id: 'dashboard', icon: 'dashboard', label: 'Dashboard', filled: true },
+    { id: 'classes', icon: 'school', label: 'My Classes', filled: true },
+    { id: 'ai-insights', icon: 'auto_awesome', label: 'AI Insights' },
+    { id: 'schedule', icon: 'calendar_month', label: 'Schedule' },
+    { id: 'assignments', icon: 'assignment', label: 'Assignments' },
+    { id: 'payroll', icon: 'payments', label: 'Payroll' },
+  ];
+
   return (
     <aside className="w-20 lg:w-64 flex-shrink-0 flex flex-col bg-teal-sidebar text-white transition-all duration-300 z-20 shadow-xl">
       <div className="h-24 flex items-center justify-center lg:justify-start lg:px-8">
@@ -29,12 +51,16 @@ export const Sidebar: React.FC = () => {
       </div>
 
       <nav className="flex-1 flex flex-col gap-2 px-4 py-4 overflow-y-auto">
-        <NavItem icon="dashboard" label="Dashboard" active filled />
-        <NavItem icon="school" label="My Classes" />
-        <NavItem icon="auto_awesome" label="AI Insights" />
-        <NavItem icon="calendar_month" label="Schedule" />
-        <NavItem icon="assignment" label="Assignments" />
-        <NavItem icon="payments" label="Payroll" />
+        {navItems.map((item) => (
+          <NavItem
+            key={item.id}
+            icon={item.icon}
+            label={item.label}
+            active={activeTab === item.id}
+            filled={item.filled}
+            onClick={() => onTabChange(item.id)}
+          />
+        ))}
       </nav>
 
       <div className="p-6 mt-auto space-y-2">

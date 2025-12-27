@@ -5,7 +5,7 @@ import { Header } from './components/Layout/Header';
 import { StatCard } from './components/Dashboard/StatCard';
 import { GrowthChart } from './components/Dashboard/GrowthChart';
 import { StatusCard } from './components/Dashboard/StatusCard';
-import { ActionGrid } from './components/Dashboard/ActionGrid';
+// import { ActionGrid } from './components/Dashboard/ActionGrid';
 import ClassCard from './components/MyClasses/ClassCard';
 import CreateClassForm from './components/MyClasses/CreateClassForm';
 import { INITIAL_CLASSES } from './constants';
@@ -78,7 +78,7 @@ const App: React.FC = () => {
       </div>
 
       {/* Action Section */}
-      <ActionGrid />
+      {/* <ActionGrid /> */}
     </div>
   );
 
