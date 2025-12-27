@@ -1,125 +1,44 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import './Hero.css';
-import studentImage from '../../../../assets/student1.png';
-import bgImage from '../../../../assets/Bg.jpg';
-import bg2 from '../../../../assets/bg2.jpg';
-import bg3 from '../../../../assets/bg3.jpg';
-import bg4 from '../../../../assets/bg4.jpg';
-import { useNavigate } from 'react-router-dom';
+import studentImage from '../../../../assets/web mobile.png';
+/* import { useNavigate } from 'react-router-dom'; */
 
 const Hero: React.FC = () => {
-  const [currentBgIndex, setCurrentBgIndex] = useState(0);
-  // store previous bg index for cross-fade
-  const [prevBgIndex, setPrevBgIndex] = useState<number | null>(null);
-  const transitionTimerRef = useRef<number | null>(null);
-
-  const navigate = useNavigate();
-
-  // Array of background images - add more images to this array
-  const backgroundImages = [
-    bgImage,
-    bg2,
-    bg3,
-    bg4
-  ];
-
-  // Change background every 7 seconds with cross-fade
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBgIndex((prevIndex) => {
-        // set previous to the current before updating
-        setPrevBgIndex(prevIndex);
-
-        const next = (prevIndex + 1) % backgroundImages.length;
-
-        // schedule clearing of previous after transition
-        if (transitionTimerRef.current) {
-          window.clearTimeout(transitionTimerRef.current);
-        }
-        transitionTimerRef.current = window.setTimeout(() => {
-          setPrevBgIndex(null);
-          transitionTimerRef.current = null;
-        }, 1200);
-
-        return next;
-      });
-    }, 7000); // Change every 7 seconds for smoother transitions
-
-    return () => {
-      clearInterval(interval);
-      if (transitionTimerRef.current) {
-        window.clearTimeout(transitionTimerRef.current);
-      }
-    };
-  }, [backgroundImages.length]);
-
-  const handleDotClick = (index: number) => {
-    if (index === currentBgIndex) return;
-    setPrevBgIndex(currentBgIndex);
-    setCurrentBgIndex(index);
-
-    if (transitionTimerRef.current) {
-      window.clearTimeout(transitionTimerRef.current);
-    }
-    transitionTimerRef.current = window.setTimeout(() => {
-      setPrevBgIndex(null);
-      transitionTimerRef.current = null;
-    }, 1200);
-  };
+  /* const navigate = useNavigate(); */
 
   return (
-    <section className="hero">
-      <div className="hero-background">
-        {/* previous image for cross-fade (if any) */}
-        {prevBgIndex !== null && (
-          <div
-            className="bg-image bg-image--hide"
-            style={{
-              backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%), url(${backgroundImages[prevBgIndex]})`
-            }}
-          />
-        )}
-
-        {/* current image */}
-        <div
-          className={`bg-image ${prevBgIndex !== null ? 'bg-image--show' : 'bg-image--visible'}`}
-          style={{
-            backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%), url(${backgroundImages[currentBgIndex]})`
-          }}
-        />
+    <section className="hero" id="home">
+      {/* Floating particles */}
+      <div className="floating-particles">
+        <div className="particle particle-1"></div>
+        <div className="particle particle-2"></div>
+        <div className="particle particle-3"></div>
+        <div className="particle particle-4"></div>
+        <div className="particle particle-5"></div>
       </div>
+
       <div className="hero-container">
         {/* Left Content */}
         <div className="hero-content">
-          <h1 className="hero-title">
-            <span className="highlight">Physics</span> made simple — learn online with expert tutors
+          <div className="hero-certificate-text">GENERAL CERTIFICATE OF EDUCATION ADVANCED LEVEL</div>
+          <h1 className="hero-title-physics">
+            <span className="physics-online">ONLINE PHYSICS</span>
           </h1>
-          <p className="hero-description">
-            TOTC offers engaging live classes, guided practice and personalised feedback to help you
-            excel and build confidence — join a class today.
-          </p>
-          <div className="hero-buttons">
-            <button className="btn-register" aria-label="Register for classes" onClick={() => navigate('/register')}>Register for Classes</button>
-          </div>
+          <div className="hero-instructor-name">අමිල සී.එදිරිමාන්න</div>
+          <div className="hero-guarantee-english">Excellent Results are Our Guarantee</div>
+          <div className="hero-guarantee-sinhala">විශිෂ්ට ප්‍රතිඵල, අපගේ සහතිකයයි...</div>
         </div>
 
         {/* Right visual with student image */}
         <div className="hero-visual">
+          <div className="decorative-blob blob-top-left"></div>
+          <div className="decorative-blob blob-bottom-right"></div>
+          <div className="geometric-triangle triangle-1"></div>
+          <div className="geometric-triangle triangle-2"></div>
           <div className="student-image">
             <img src={studentImage} alt="Student" />
           </div>
         </div>
-      </div>
-
-      {/* Carousel Dots */}
-      <div className="carousel-dots">
-        {backgroundImages.map((_, index) => (
-          <span 
-            key={index}
-            className={`dot ${currentBgIndex === index ? 'active' : ''}`}
-            onClick={() => handleDotClick(index)}
-          ></span>
-        ))}
       </div>
 
       {/* WhatsApp Floating Button */}

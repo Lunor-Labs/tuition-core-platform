@@ -14,12 +14,13 @@ const Topstudent: React.FC = () => {
 
   const remainingStudents: TopStudent[] = [
     { rank: 4, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
-    { rank: 5, name: 'Yasith Banula', school: '', marks: 60 },
-    { rank: 6, name: 'Yasith Banula', school: '', marks: 60 },
-    { rank: 7, name: 'Yasith Banula', school: '', marks: 60 },
-    { rank: 8, name: 'Yasith Banula', school: '', marks: 60 },
-    { rank: 9, name: 'Yasith Banula', school: '', marks: 60 },
-    { rank: 10, name: 'Yasith Banula', school: '', marks: 60 },
+    { rank: 5, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
+    { rank: 6, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
+    { rank: 7, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
+    { rank: 8, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
+    { rank: 9, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
+    { rank: 10, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
+    { rank: 11, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
   ];
 
   const filters = ['2026 A/L Physics', '2026 A/L Physics', '2026 A/L Physics'];
@@ -76,15 +77,13 @@ const Topstudent: React.FC = () => {
             {remainingStudents.map((student) => (
               <div key={student.rank} className="remaining-student-card">
                 <div className="remaining-card-content">
-                  {student.image && (
-                    <div className="student-image-wrapper-small">
-                      <img 
-                        src={student.image} 
-                        alt={student.name}
-                        className="student-profile-image-small"
-                      />
-                    </div>
-                  )}
+                  <div className="student-image-wrapper-small">
+                    <img 
+                      src={student.image || studentImage} 
+                      alt={student.name}
+                      className="student-profile-image-small"
+                    />
+                  </div>
                   <div className="remaining-card-text">
                     <h4 className="student-name-small">{student.name}</h4>
                     <p className="student-marks-small">Marks {student.marks}</p>
