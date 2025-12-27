@@ -147,7 +147,7 @@ const App: React.FC = () => {
       case 'payroll':
         return renderComingSoon(activeTab);
       default:
-        return renderDashboard();
+        return renderComingSoon(activeTab);
     }
   };
 
