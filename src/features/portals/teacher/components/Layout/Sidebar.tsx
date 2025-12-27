@@ -9,7 +9,7 @@ interface NavItemProps {
   onClick?: () => void;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ icon, label, active, filled, onClick }) => (
+const NavItem: React.FC<NavItemProps> = ({ icon, label, active, onClick }) => (
   <button
     onClick={onClick}
     className={`flex items-center gap-4 px-4 py-3 rounded-full transition-all group w-full text-left focus:outline-none ${
