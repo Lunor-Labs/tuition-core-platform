@@ -7,6 +7,8 @@ import { AssignmentsCard } from './components/Dashboard/AssignmentsCard';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+  // Mobile sidebar state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const renderDashboard = () => (
     <div className="space-y-6">
@@ -83,9 +85,9 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen w-full">
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#fff7ed]">
-        <Header />
+        <Header onMobileMenuToggle={() => setIsSidebarOpen(true)} />
         <main className="flex-1 overflow-y-auto px-8 lg:px-[192px] py-8">
           <div className="max-w-[1280px] mx-auto w-full">
             {renderContent()}

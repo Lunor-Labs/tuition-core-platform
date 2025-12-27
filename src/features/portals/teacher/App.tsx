@@ -14,6 +14,8 @@ import { ClassStatus } from './types';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+  // Mobile sidebar state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [classes, setClasses] = useState<ClassItem[]>(INITIAL_CLASSES);
   const [sortBy, setSortBy] = useState('Newest First');
 
@@ -153,9 +155,9 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen w-full">
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <Header />
+        <Header onMobileMenuToggle={() => setIsSidebarOpen(true)} />
         <main className="flex-1 overflow-y-auto p-4 lg:p-8">
           <div className="max-w-7xl mx-auto">
             {renderContent()}
