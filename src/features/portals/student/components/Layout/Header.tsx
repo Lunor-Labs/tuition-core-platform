@@ -19,7 +19,7 @@ export const Header: React.FC<HeaderProps> = ({ onMobileMenuToggle }) => {
         </button>
 
         <div className="flex flex-col">
-          <h1 className="text-2xl font-bold text-slate-800">Welcome back, Mr. Amila C 👋</h1>
+          <h1 className="text-2xl font-bold text-slate-800">Tharusha 👋</h1>
           <p className="text-xs text-slate-400">Here's your improved dashboard overview</p>
         </div>
       </div>
