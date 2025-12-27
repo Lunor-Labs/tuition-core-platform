@@ -18,8 +18,8 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, active, filled, onClick 
         : 'text-teal-100 bg-white/10 hover:text-white'
     }`}
   >
-    <span className={`material-symbols-outlined ${filled ? 'icon-filled' : ''}`}>{icon}</span>
-    <span className="font-medium text-sm hidden lg:block">{label}</span>
+    <span className="material-symbols-outlined text-[28px]">{icon}</span>
+    <span className="font-medium text-sm">{label}</span>
   </button>
 );
 
