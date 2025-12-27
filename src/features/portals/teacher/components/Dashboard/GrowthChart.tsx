@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { 
   AreaChart, 
   Area, 
@@ -22,6 +22,52 @@ const data = [
 ];
 
 export const GrowthChart: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerWidth, setContainerWidth] = React.useState<number>(0);
+
+  useEffect(() => {
+    // Diagnostic: verify component mounts and data and container size
+    // Remove or change to proper logging in production
+    // eslint-disable-next-line no-console
+    console.log('GrowthChart mounted — data length:', data.length, data);
+
+    const measure = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        // eslint-disable-next-line no-console
+        console.log('GrowthChart container rect:', rect);
+        if (rect.width > 0) {
+          setContainerWidth(Math.floor(rect.width));
+          // trigger a resize event so Recharts recalculates if needed
+          window.dispatchEvent(new Event('resize'));
+        }
+      }
+    };
+
+    measure();
+
+    let ro: ResizeObserver | null = null;
+    if ((window as any).ResizeObserver && containerRef.current) {
+      ro = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const w = Math.floor(entry.contentRect.width);
+          // eslint-disable-next-line no-console
+          console.log('GrowthChart resize observed width:', w);
+          setContainerWidth(w);
+        }
+      });
+      ro.observe(containerRef.current);
+    } else {
+      const onResize = () => measure();
+      window.addEventListener('resize', onResize);
+      return () => window.removeEventListener('resize', onResize);
+    }
+
+    return () => {
+      if (ro) ro.disconnect();
+    };
+  }, []);
+
   return (
     <div className="bg-white rounded-3xl p-8 shadow-soft flex flex-col h-full min-h-[400px]">
       <div className="flex items-center justify-between mb-8">
@@ -35,9 +81,11 @@ export const GrowthChart: React.FC = () => {
         </div>
       </div>
       
-      <div className="flex-1 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+      <div ref={containerRef} className="flex-1 w-full min-h-[300px]" style={{ minHeight: 300, minWidth: 0, border: '1px dashed rgba(14,116,144,0.06)' }}>
+        {/* Use an explicit numeric height so Recharts can calculate dimensions reliably */}
+        {containerWidth > 0 ? (
+          <ResponsiveContainer width={containerWidth} height={300}>
+            <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
             <defs>
               <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#0e7490" stopOpacity={0.2}/>
@@ -79,6 +127,11 @@ export const GrowthChart: React.FC = () => {
             />
           </AreaChart>
         </ResponsiveContainer>
+        ) : (
+          <div style={{ minHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span className="text-slate-400">Loading chart…</span>
+          </div>
+        )}
       </div>
     </div>
   );
