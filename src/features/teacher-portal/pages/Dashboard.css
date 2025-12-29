@@ -83,7 +83,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  background: linear-gradient(90deg, #0891b2 0%, #8b5cf6 50%, #10b981 100%);
 }
 
 .stat-card:hover {
@@ -102,23 +102,23 @@
 }
 
 .stat-icon.lessons {
-  background: var(--color-bg-accent);
-  color: var(--color-primary);
+  background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%);
+  color: #0891b2;
 }
 
 .stat-icon.students {
-  background: var(--color-secondary-light);
-  color: var(--color-secondary-dark);
+  background: linear-gradient(135deg, #f3e8ff 0%, #ede9fe 100%);
+  color: #8b5cf6;
 }
 
 .stat-icon.upcoming {
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  color: #0891b2;
 }
 
 .stat-icon.tests {
-  background: var(--color-gray-100);
-  color: var(--color-primary);
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #d97706;
 }
 
 .stat-content h3 {

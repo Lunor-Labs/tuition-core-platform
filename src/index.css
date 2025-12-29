@@ -1,14 +1,14 @@
 /* Google Fonts Import */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
 
 * {
   box-sizing: border-box;
 }
 
 :root {
-  /* Typography */
-  --font-family-primary: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  --font-family-secondary: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  /* Typography - Modern fonts */
+  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --font-family-secondary: 'Plus Jakarta Sans', 'Inter', sans-serif;
 
   /* Font Weights */
   --font-weight-normal: 400;
@@ -57,23 +57,23 @@
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
-  /* Colors - Education Theme */
+  /* Colors - Modern Education Theme */
 
-  /* Primary Colors (Shared between themes) */
-  --color-primary: #3b82f6;           /* Soft blue */
-  --color-primary-light: #60a5fa;     /* Light sky blue */
-  --color-primary-dark: #2563eb;      /* Darker blue */
+  /* Primary Colors - Modern Teal/Blue */
+  --color-primary: #0891b2;           /* Modern teal */
+  --color-primary-light: #06b6d4;     /* Bright teal */
+  --color-primary-dark: #0e7490;      /* Deep teal */
 
-  /* Secondary Colors (Shared between themes) */
-  --color-secondary: #67e8f9;         /* Light sky blue */
-  --color-secondary-light: #a5f3fc;   /* Very light sky blue */
-  --color-secondary-dark: #22d3ee;    /* Muted teal */
+  /* Secondary Colors - Modern Vibrant */
+  --color-secondary: #8b5cf6;         /* Purple */
+  --color-secondary-light: #a78bfa;   /* Light purple */
+  --color-secondary-dark: #7c3aed;    /* Deep purple */
 
-  /* Status Colors (Shared between themes) */
-  --color-success: #10b981;           /* Green */
-  --color-warning: #f59e0b;           /* Amber */
-  --color-error: #ef4444;             /* Red */
-  --color-info: #3b82f6;              /* Blue */
+  /* Status Colors - Vibrant and clear */
+  --color-success: #10b981;           /* Emerald green */
+  --color-warning: #f97316;           /* Bright orange */
+  --color-error: #ef4444;             /* Vivid red */
+  --color-info: #0891b2;              /* Teal */
 
   /* Light Theme Colors */
   --color-white: #ffffff;

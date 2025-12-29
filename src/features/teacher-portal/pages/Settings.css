@@ -174,12 +174,13 @@
   margin: 0;
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
 }
 
 .profile-section .section-title::before {
   content: '👤';
   font-size: var(--font-size-xl);
+  margin-right: var(--spacing-sm);
 }
 
 .edit-notice {
@@ -386,12 +387,13 @@
   margin: 0 0 var(--spacing-sm) 0;
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
 }
 
 .preference-title::before {
   content: '⚙️';
   font-size: var(--font-size-lg);
+  margin-right: var(--spacing-sm);
 }
 
 .preference-description {
