@@ -142,13 +142,6 @@ export async function loginWithEmail(email: string, password: string): Promise<U
  */
 export async function logoutUser() {
   try {
-    // Clear user cache before signing out
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      localStorage.removeItem(`user_role_${currentUser.uid}`);
-      localStorage.removeItem(`user_display_id_${currentUser.uid}`);
-    }
-
     await auth.signOut();
   } catch (error: any) {
     console.error('Error logging out:', error);
