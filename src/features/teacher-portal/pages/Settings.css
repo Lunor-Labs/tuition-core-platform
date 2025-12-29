@@ -84,15 +84,6 @@
   border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
 }
 
-.nav-emoji {
-  flex-shrink: 0;
-  font-size: 20px;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 /* Settings Content */
 .settings-content {
@@ -186,7 +177,7 @@
   gap: var(--spacing-md);
 }
 
-.section-title::before {
+.profile-section .section-title::before {
   content: '👤';
   font-size: var(--font-size-xl);
 }

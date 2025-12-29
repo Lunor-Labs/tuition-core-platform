@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '../../../shared/contexts/ThemeContext';
 import type { DashboardStats } from '../../../shared/types';
 import './Dashboard.css';
 
@@ -71,6 +72,55 @@ const recentSubmissions = [
   }
 ];
 
+// Added more mock submissions for testing and UI layout
+const moreRecentSubmissions = [
+  {
+    id: '4',
+    studentId: 'std4',
+    studentName: 'Aisha Khan',
+    testTitle: 'Electricity Basics Test',
+    submittedAt: '2024-12-24T08:45:00Z',
+    status: 'graded',
+    score: 78
+  },
+  {
+    id: '5',
+    studentId: 'std5',
+    studentName: 'Carlos Mendez',
+    testTitle: 'Thermodynamics Assessment',
+    submittedAt: '2024-12-24T09:10:00Z',
+    status: 'pending',
+    score: null
+  },
+  {
+    id: '6',
+    studentId: 'std6',
+    studentName: 'Li Wei',
+    testTitle: 'Chemistry Lab Report',
+    submittedAt: '2024-12-24T11:20:00Z',
+    status: 'late',
+    score: null
+  },
+  {
+    id: '7',
+    studentId: 'std7',
+    studentName: 'Sara Ahmed',
+    testTitle: 'Mechanics Fundamentals Quiz',
+    submittedAt: '2024-12-24T12:02:00Z',
+    status: 'graded',
+    score: 91
+  },
+  {
+    id: '8',
+    studentId: 'std8',
+    studentName: 'Omar Ali',
+    testTitle: 'Mechanics Fundamentals Quiz',
+    submittedAt: '2024-12-24T12:30:00Z',
+    status: 'pending',
+    score: null
+  }
+];
+
 const notifications = [
   {
     id: '1',
@@ -109,13 +159,63 @@ const studentActivity = [
 ];
 
 
+const recentStudentActivity = [
+  {
+    id: '1',
+    studentName: 'John Doe',
+    action: 'submitted_test',
+    description: 'Completed Mathematics Quiz',
+    time: '10 minutes ago'
+  },
+  {
+    id: '2',
+    studentName: 'Jane Smith',
+    action: 'joined_lesson',
+    description: 'Joined Physics Workshop',
+    time: '30 minutes ago'
+  },
+  {
+    id: '3',
+    studentName: 'Mike Johnson',
+    action: 'viewed_material',
+    description: 'Viewed Thermodynamics Notes',
+    time: '1 hour ago'
+  },
+  {
+    id: '4',
+    studentName: 'Sarah Wilson',
+    action: 'submitted_test',
+    description: 'Completed Chemistry Lab Report',
+    time: '2 hours ago'
+  }
+];
+
+
 const Dashboard: React.FC = () => {
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <h1 className="dashboard-title">Dashboard</h1>
-        <p className="dashboard-subtitle">Welcome back! Here's your teaching overview.</p>
+        <div>
+          <h1 className="dashboard-title">Dashboard</h1>
+          <p className="dashboard-subtitle">Welcome back! Here's your teaching overview.</p>
+        </div>
+        <div className="header-controls">
+          <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+            {theme === 'dark' ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5"/>
+              </svg>
+            )}
+            <span className="theme-label">{theme === 'dark' ? 'Dark' : 'Light'}</span>
+          </button>
+        </div>
       </div>
 
       {/* Stats Cards */}
@@ -130,9 +230,6 @@ const Dashboard: React.FC = () => {
             <h3 className="stat-number">{mockStats.totalLessons}</h3>
             <p className="stat-label">Total Lessons</p>
           </div>
-          <div className="stat-actions">
-            <button className="stat-btn">View Lessons</button>
-          </div>
         </div>
 
         <div className="stat-card">
@@ -144,9 +241,6 @@ const Dashboard: React.FC = () => {
           <div className="stat-content">
             <h3 className="stat-number">{mockStats.totalStudents}</h3>
             <p className="stat-label">Total Students</p>
-          </div>
-          <div className="stat-actions">
-            <button className="stat-btn">Manage Students</button>
           </div>
         </div>
 
@@ -160,9 +254,6 @@ const Dashboard: React.FC = () => {
             <h3 className="stat-number">{mockStats.upcomingLessons}</h3>
             <p className="stat-label">Upcoming Lessons</p>
           </div>
-          <div className="stat-actions">
-            <button className="stat-btn">View Schedule</button>
-          </div>
         </div>
 
         <div className="stat-card">
@@ -175,41 +266,11 @@ const Dashboard: React.FC = () => {
             <h3 className="stat-number">{mockStats.totalTests}</h3>
             <p className="stat-label">Total Tests</p>
           </div>
-          <div className="stat-actions">
-            <button className="stat-btn">View Tests</button>
-          </div>
         </div>
       </div>
 
       {/* Dashboard Content */}
       <div className="dashboard-content">
-        {/* Quick Actions */}
-        <div className="content-section">
-          <div className="section-header">
-            <h2 className="section-title">Quick Actions</h2>
-          </div>
-          <div className="quick-actions">
-            <button className="action-btn primary">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-              Create Lesson
-            </button>
-            <button className="action-btn secondary">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.33 0 2.6.29 3.74.82" stroke="currentColor" strokeWidth="2"/>
-              </svg>
-              Create Test
-            </button>
-            <button className="action-btn outline">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke="currentColor" strokeWidth="2"/>
-              </svg>
-              View Lessons
-            </button>
-          </div>
-        </div>
-
         {/* Upcoming Lessons & Recent Submissions */}
         <div className="content-row">
           {/* Upcoming Lessons */}
@@ -249,29 +310,20 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Recent Submissions */}
-          <div className="content-section">
+          <div className="content-section submissions-section">
             <div className="section-header">
               <h2 className="section-title">Recent Submissions</h2>
               <button className="btn-link">View All</button>
             </div>
             <div className="submissions-list">
-              {recentSubmissions.map((submission) => (
+              {[...recentSubmissions, ...moreRecentSubmissions].map((submission) => (
                 <div key={submission.id} className="submission-card">
                   <div className="submission-info">
                     <h3 className="submission-student">{submission.studentName}</h3>
                     <p className="submission-test">{submission.testTitle}</p>
-                    <span className={`submission-status ${submission.status}`}>
-                      {submission.status}
-                    </span>
                   </div>
                   <div className="submission-score">
-                    {submission.status === 'graded' ? (
-                      <div className="score-display">
-                        <span className="score">{submission.score}/100</span>
-                      </div>
-                    ) : (
-                      <button className="btn-primary small">Grade</button>
-                    )}
+                    <button className="btn-outline small">View Grade</button>
                   </div>
                 </div>
               ))}
@@ -346,6 +398,51 @@ const Dashboard: React.FC = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Additional Dashboard Sections */}
+      <div className="dashboard-content">
+        {/* Student Activity Feed */}
+        <div className="content-section">
+          <div className="section-header">
+            <h2 className="section-title">Recent Student Activity</h2>
+          </div>
+          <div className="activity-feed">
+            {recentStudentActivity.map((activity) => (
+              <div key={activity.id} className="activity-item">
+                <div className="activity-icon">
+                  {activity.action === 'submitted_test' && (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.33 0 2.6.29 3.74.82" stroke="currentColor" strokeWidth="2"/>
+                    </svg>
+                  )}
+                  {activity.action === 'joined_lesson' && (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M17 20h5v-2a3 3 0 0 0-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M17 20v-2a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3v2m10 0H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20v-2a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v2m-10-8a3 3 0 1 1 6 0 3 3 0 0 1-6 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                  {activity.action === 'viewed_material' && (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                </div>
+                <div className="activity-content">
+                  <p className="activity-text">
+                    <span className="activity-student">{activity.studentName}</span>
+                    {' '}
+                    {activity.action === 'submitted_test' && 'submitted'}
+                    {activity.action === 'joined_lesson' && 'joined'}
+                    {activity.action === 'viewed_material' && 'viewed'}
+                    {' '}
+                    {activity.description}
+                  </p>
+                  <span className="activity-time">{activity.time}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

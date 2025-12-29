@@ -58,17 +58,24 @@
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
   /* Colors - Education Theme */
-  /* Primary Colors */
+
+  /* Primary Colors (Shared between themes) */
   --color-primary: #3b82f6;           /* Soft blue */
   --color-primary-light: #60a5fa;     /* Light sky blue */
   --color-primary-dark: #2563eb;      /* Darker blue */
 
-  /* Secondary Colors */
+  /* Secondary Colors (Shared between themes) */
   --color-secondary: #67e8f9;         /* Light sky blue */
   --color-secondary-light: #a5f3fc;   /* Very light sky blue */
   --color-secondary-dark: #22d3ee;    /* Muted teal */
 
-  /* Neutral Colors */
+  /* Status Colors (Shared between themes) */
+  --color-success: #10b981;           /* Green */
+  --color-warning: #f59e0b;           /* Amber */
+  --color-error: #ef4444;             /* Red */
+  --color-info: #3b82f6;              /* Blue */
+
+  /* Light Theme Colors */
   --color-white: #ffffff;
   --color-gray-50: #f9fafb;          /* Very light gray/off-white */
   --color-gray-100: #f3f4f6;
@@ -81,25 +88,53 @@
   --color-gray-800: #1f2937;
   --color-gray-900: #111827;
 
-  /* Background Colors */
+  /* Light Theme Background Colors */
   --color-bg-primary: #f9fafb;        /* Very light gray/off-white */
   --color-bg-secondary: #ffffff;      /* White */
   --color-bg-accent: #f0f9ff;         /* Very light blue tint */
 
-  /* Text Colors */
+  /* Light Theme Text Colors */
   --color-text-primary: #111827;      /* Dark gray */
   --color-text-secondary: #4b5563;    /* Medium gray */
   --color-text-muted: #6b7280;        /* Light gray */
   --color-text-inverse: #ffffff;      /* White */
 
-  /* Status Colors */
-  --color-success: #10b981;           /* Green */
-  --color-warning: #f59e0b;           /* Amber */
-  --color-error: #ef4444;             /* Red */
-  --color-info: #3b82f6;              /* Blue */
-
   /* Global navbar height used to offset fixed header from content */
   --navbar-height: 80px;
+
+/* Dark Theme Colors */
+[data-theme="dark"] {
+  /* Dark Theme Background Colors */
+  --color-bg-primary: #0f172a;        /* Dark slate */
+  --color-bg-secondary: #1e293b;      /* Darker slate */
+  --color-bg-accent: #1e293b;         /* Dark blue accent */
+
+  /* Dark Theme Text Colors */
+  --color-text-primary: #f1f5f9;      /* Light slate */
+  --color-text-secondary: #cbd5e1;    /* Medium slate */
+  --color-text-muted: #94a3b8;        /* Muted slate */
+  --color-text-inverse: #0f172a;      /* Dark slate */
+
+  /* Dark Theme Neutral Colors */
+  --color-white: #1e293b;             /* Dark slate instead of white */
+  --color-gray-50: #0f172a;          /* Very dark */
+  --color-gray-100: #1e293b;         /* Dark */
+  --color-gray-200: #334155;         /* Medium dark */
+  --color-gray-300: #475569;         /* Medium */
+  --color-gray-400: #64748b;         /* Light medium */
+  --color-gray-500: #94a3b8;         /* Light */
+  --color-gray-600: #cbd5e1;         /* Very light */
+  --color-gray-700: #e2e8f0;         /* Almost white */
+  --color-gray-800: #f1f5f9;         /* White */
+  --color-gray-900: #ffffff;         /* Pure white */
+
+  /* Dark Theme Shadows (lighter for dark backgrounds) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
 
   /* Font settings */
   font-family: var(--font-family-primary);

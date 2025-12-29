@@ -1,5 +1,7 @@
 // Shared type definitions used across the application
 
+export type Theme = 'light' | 'dark';
+
 export interface ProcessStep {
   icon: string;
   title: string;

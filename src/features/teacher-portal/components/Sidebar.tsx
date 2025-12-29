@@ -126,6 +126,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
           )}
         </div>
 
+        
         <button className="logout-btn" onClick={() => {
           // Handle logout logic here
           if (window.confirm('Are you sure you want to logout?')) {

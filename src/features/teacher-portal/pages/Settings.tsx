@@ -101,21 +101,18 @@ const Settings: React.FC = () => {
             className={`nav-btn ${activeTab === 'profile' ? 'active' : ''}`}
             onClick={() => setActiveTab('profile')}
           >
-            <span className="nav-emoji">👤</span>
             Profile
           </button>
           <button
             className={`nav-btn ${activeTab === 'preferences' ? 'active' : ''}`}
             onClick={() => setActiveTab('preferences')}
           >
-            <span className="nav-emoji">⚙️</span>
             Preferences
           </button>
           <button
             className={`nav-btn ${activeTab === 'security' ? 'active' : ''}`}
             onClick={() => setActiveTab('security')}
           >
-            <span className="nav-emoji">🔒</span>
             Security
           </button>
         </div>

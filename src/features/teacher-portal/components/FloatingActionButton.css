@@ -1,0 +1,240 @@
+/* Floating Action Button Styles */
+.fab-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 40;
+}
+
+/* Main FAB Button */
+.fab-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.fab-main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0;
+}
+
+.fab-main:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+}
+
+.fab-main:hover::before {
+  opacity: 1;
+}
+
+.fab-main:active {
+  transform: scale(0.95);
+}
+
+.fab-main-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.fab-main-icon.rotate {
+  transform: rotate(45deg);
+}
+
+/* FAB Actions */
+.fab-action {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: scale(0) translate(0, 0);
+  pointer-events: none;
+}
+
+.fab-container.open .fab-action {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Animation for action buttons when open */
+.fab-action {
+  animation: fabActionHide 0.3s ease forwards;
+}
+
+.fab-container.open .fab-action {
+  animation: fabActionShow 0.3s ease forwards;
+}
+
+@keyframes fabActionShow {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fabActionHide {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+/* Calculate positions for 4 actions */
+.fab-action:nth-child(1) {
+  --fab-index: 0;
+}
+
+.fab-action:nth-child(2) {
+  --fab-index: 1;
+}
+
+.fab-action:nth-child(3) {
+  --fab-index: 2;
+}
+
+.fab-action:nth-child(4) {
+  --fab-index: 3;
+}
+
+.fab-container.open .fab-action:nth-child(1) {
+  transform: translate(0, -70px);
+}
+
+.fab-container.open .fab-action:nth-child(2) {
+  transform: translate(-50px, -50px);
+}
+
+.fab-container.open .fab-action:nth-child(3) {
+  transform: translate(-70px, 0);
+}
+
+.fab-container.open .fab-action:nth-child(4) {
+  transform: translate(-50px, 50px);
+}
+
+/* Color variants */
+.fab-action-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #3b82f6 100%);
+}
+
+.fab-action-secondary {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, #8b5cf6 100%);
+}
+
+.fab-action-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.fab-action-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.fab-action:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* FAB Backdrop */
+.fab-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  animation: backdropFadeIn 0.2s ease forwards;
+  z-index: -1;
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .fab-container {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .fab-main {
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+
+  .fab-action {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
+  }
+
+  .fab-container.open .fab-action:nth-child(1) {
+    transform: translate(0, -60px);
+  }
+
+  .fab-container.open .fab-action:nth-child(2) {
+    transform: translate(-42px, -42px);
+  }
+
+  .fab-container.open .fab-action:nth-child(3) {
+    transform: translate(-60px, 0);
+  }
+
+  .fab-container.open .fab-action:nth-child(4) {
+    transform: translate(-42px, 42px);
+  }
+}
+
+@media (max-width: 480px) {
+  .fab-container {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .fab-main {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+
+  .fab-action {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+}

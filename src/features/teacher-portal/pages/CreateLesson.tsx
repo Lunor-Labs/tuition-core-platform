@@ -8,6 +8,7 @@ interface LessonFormData {
   date: string;
   time: string;
   duration: number;
+  zoomLink?: string;
   resources: Resource[];
 }
 
@@ -18,11 +19,14 @@ const CreateLesson: React.FC = () => {
     date: '',
     time: '',
     duration: 60,
+    zoomLink: '',
     resources: []
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dragActive, setDragActive] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -102,17 +106,42 @@ const CreateLesson: React.FC = () => {
         date: '',
         time: '',
         duration: 60,
+        zoomLink: '',
         resources: []
       });
 
-      // Show success message (in a real app, you'd use a toast notification)
-      alert('Lesson created successfully!');
+      // Show inline success banner
+      setSuccessMessage('Lesson created successfully!');
+      setTimeout(() => setSuccessMessage(''), 4500);
 
     } catch (error) {
       console.error('Error creating lesson:', error);
-      alert('Failed to create lesson. Please try again.');
+      setErrorMessage('Failed to create lesson. Please try again.');
+      setTimeout(() => setErrorMessage(''), 4500);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const generateZoomLink = () => {
+    // Mock Zoom link generator (replace with real API integration if needed)
+    const meetingId = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+    const passcode = Math.floor(1000 + Math.random() * 9000).toString();
+    const link = `https://zoom.us/j/${meetingId}?pwd=${passcode}`;
+    setFormData(prev => ({ ...prev, zoomLink: link }));
+    setSuccessMessage('Zoom link generated');
+    setTimeout(() => setSuccessMessage(''), 2500);
+  };
+
+  const copyZoomLink = async () => {
+    if (!formData.zoomLink) return;
+    try {
+      await navigator.clipboard.writeText(formData.zoomLink);
+      setSuccessMessage('Zoom link copied to clipboard');
+      setTimeout(() => setSuccessMessage(''), 2000);
+    } catch (err) {
+      setErrorMessage('Unable to copy link');
+      setTimeout(() => setErrorMessage(''), 2000);
     }
   };
 
@@ -159,6 +188,28 @@ const CreateLesson: React.FC = () => {
         <h1 className="page-title">Create New Lesson</h1>
         <p className="page-subtitle">Set up a new lesson with all the necessary details and resources.</p>
       </div>
+
+      {/* Stepper */}
+      <div className="lesson-stepper">
+        <div className="step active">1<span>Details</span></div>
+        <div className="step">2<span>Schedule</span></div>
+        <div className="step">3<span>Resources</span></div>
+        <div className="step">4<span>Preview</span></div>
+      </div>
+
+      {/* Decorative chips */}
+      <div className="header-chips">
+        <div className="chip">⏱ {formData.duration} min</div>
+        <div className="chip">📎 {formData.resources.length} resources</div>
+        <div className="chip">🔗 {formData.zoomLink ? 'Zoom ready' : 'No Zoom'}</div>
+      </div>
+
+      {successMessage && (
+        <div className="inline-toast success">{successMessage}</div>
+      )}
+      {errorMessage && (
+        <div className="inline-toast error">{errorMessage}</div>
+      )}
 
       <div className="lesson-form-container">
         <form onSubmit={handleSubmit} className="lesson-form">
@@ -246,6 +297,25 @@ const CreateLesson: React.FC = () => {
                 </select>
               </div>
             </div>
+            
+            <div className="form-group zoom-row">
+              <label htmlFor="zoomLink" className="form-label">🔗 Zoom Meeting Link</label>
+              <div className="zoom-input-wrapper">
+                <input
+                  type="text"
+                  id="zoomLink"
+                  name="zoomLink"
+                  value={formData.zoomLink || ''}
+                  onChange={(e) => setFormData(prev => ({ ...prev, zoomLink: e.target.value }))}
+                  className="form-input zoom-input"
+                  placeholder="Paste a Zoom link or generate one"
+                />
+                <div className="zoom-actions">
+                  <button type="button" className="btn-outline" onClick={generateZoomLink}>Generate</button>
+                  <button type="button" className="btn-ghost" onClick={copyZoomLink}>Copy</button>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Resources */}
@@ -322,23 +392,86 @@ const CreateLesson: React.FC = () => {
 
           {/* Form Actions */}
           <div className="form-actions">
-            <button type="button" className="btn-secondary" onClick={() => window.history.back()}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Cancel
-            </button>
-            <button type="submit" className="btn-primary" disabled={isSubmitting}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              {isSubmitting ? 'Creating Lesson...' : 'Create Lesson'}
-            </button>
+            <div className="actions-left">
+              <button type="button" className="btn-ghost" onClick={() => window.history.back()}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Back
+              </button>
+              <button
+                type="button"
+                className="btn-outline"
+                onClick={() => setSuccessMessage('Preview opened — this is just a demo.')}
+              >
+                Preview
+              </button>
+            </div>
+            <div className="actions-right">
+              <button type="submit" className="btn-primary" disabled={isSubmitting}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                {isSubmitting ? 'Creating Lesson...' : 'Create Lesson'}
+              </button>
+            </div>
           </div>
         </form>
+
+        {/* Right-side preview */}
+        <aside className="lesson-preview">
+          <div className="preview-card">
+            <div className="preview-header">
+              <h3 className="preview-title">{formData.title || 'Lesson Title'}</h3>
+              <div className="preview-meta">{formData.date && `${formData.date} · ${formData.time}`} {formData.duration ? `· ${formData.duration} min` : ''}</div>
+            </div>
+
+            <p className="preview-desc">{formData.description || 'Lesson description preview. Students will see this summary on the lesson card.'}</p>
+
+            {formData.resources.length > 0 && (
+              <div className="preview-resources">
+                {formData.resources.slice(0,4).map(r => (
+                  <div key={r.id} className="preview-resource">
+                    {r.type === 'image' ? (
+                      <img src={r.url} alt={r.name} />
+                    ) : (
+                      <div className="resource-placeholder">{r.name.split('.').pop()}</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="preview-actions">
+              {formData.zoomLink ? (
+                <>
+                  <a href={formData.zoomLink} target="_blank" rel="noreferrer" className="btn-small">Join</a>
+                  <button className="btn-small ghost" onClick={() => { navigator.clipboard?.writeText(formData.zoomLink || ''); setSuccessMessage('Zoom link copied'); setTimeout(() => setSuccessMessage(''), 2000); }}>Copy Link</button>
+                </>
+              ) : (
+                <>
+                  <button className="btn-small" onClick={generateZoomLink}>Generate Zoom</button>
+                  <button className="btn-small ghost">Share</button>
+                </>
+              )}
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );
 };
 
 export default CreateLesson;
+
+// Floating FAB submit button to mirror the main submit
+// (keeps UX consistent on long forms)
+const Fab: React.FC<{ onClick: () => void }> = ({ onClick }) => (
+  <button className="create-fab" onClick={onClick} title="Create Lesson">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  </button>
+);
+
+// Note: To render the FAB we add it near the root of the page. Consumers can mount it where appropriate.
