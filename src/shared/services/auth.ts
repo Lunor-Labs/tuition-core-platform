@@ -142,6 +142,13 @@ export async function loginWithEmail(email: string, password: string): Promise<U
  */
 export async function logoutUser() {
   try {
+    // Clear user cache before signing out
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      localStorage.removeItem(`user_role_${currentUser.uid}`);
+      localStorage.removeItem(`user_display_id_${currentUser.uid}`);
+    }
+
     await auth.signOut();
   } catch (error: any) {
     console.error('Error logging out:', error);
@@ -155,13 +162,24 @@ export async function logoutUser() {
 export async function getUserProfile(uid: string) {
   try {
     const { doc, getDoc } = await import('firebase/firestore');
-    const userDoc = await getDoc(doc(db, 'users', uid));
+
+    // Add timeout to prevent hanging on Vercel
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Profile fetch timeout')), 8000); // 8 second timeout
+    });
+
+    const fetchPromise = getDoc(doc(db, 'users', uid));
+
+    const userDoc = await Promise.race([fetchPromise, timeoutPromise]) as any;
 
     if (!userDoc.exists()) {
       throw new Error('User profile not found');
     }
 
-    return userDoc.data();
+    const profileData = userDoc.data();
+    console.log('Fetched user profile:', { uid, role: profileData.role, displayId: profileData.displayId });
+
+    return profileData;
   } catch (error: any) {
     console.error('Error fetching user profile:', error);
     throw new Error(error.message || 'Failed to fetch user profile');

@@ -18,42 +18,82 @@ const AuthPanel: React.FC<AuthPanelProps> = ({ defaultMode = 'login' }) => {
   const handleRoleBasedNavigation = async (user: any) => {
     try {
       setLoading(true);
+      console.log('Starting role-based navigation for user:', user.uid);
 
-      // Get user profile from Firestore
+      // Check localStorage first for cached role (faster than Firestore query)
+      const cachedRole = localStorage.getItem(`user_role_${user.uid}`);
+
+      if (cachedRole) {
+        console.log('Using cached role:', cachedRole);
+        navigateRole(cachedRole);
+        // Update cache in background (don't wait for it)
+        updateUserCache(user.uid);
+        return;
+      }
+
+      // Fallback to Firestore query
+      console.log('Fetching user profile from Firestore...');
       const userProfile = await getUserProfile(user.uid);
 
       if (!userProfile) {
         throw new Error('User profile not found');
       }
 
-      // Navigate based on role
-      if (userProfile.role === 'teacher') {
-        navigate('/teacher/dashboard');
-      } else if (userProfile.role === 'student') {
-        navigate('/student/dashboard');
-      } else {
-        console.error('Unknown user role:', userProfile.role);
-        // Default to student portal if role is unknown
-        navigate('/student/dashboard');
+      // Cache the role for future logins
+      localStorage.setItem(`user_role_${user.uid}`, userProfile.role);
+      if (userProfile.displayId) {
+        localStorage.setItem(`user_display_id_${user.uid}`, userProfile.displayId);
       }
+
+      navigateRole(userProfile.role);
 
     } catch (error: any) {
       console.error('Error during role-based navigation:', error);
-      // If profile fetch fails, try to determine role from local storage or default
+      // Default to student portal if everything fails
       navigate('/student/dashboard');
     } finally {
       setLoading(false);
     }
   };
 
+  const navigateRole = (role: string) => {
+    if (role === 'teacher') {
+      navigate('/teacher/dashboard');
+    } else if (role === 'student') {
+      navigate('/student/dashboard');
+    } else {
+      console.error('Unknown user role:', role);
+      navigate('/student/dashboard');
+    }
+  };
+
+  const updateUserCache = async (uid: string) => {
+    try {
+      const userProfile = await getUserProfile(uid);
+      if (userProfile) {
+        localStorage.setItem(`user_role_${uid}`, userProfile.role);
+        if (userProfile.displayId) {
+          localStorage.setItem(`user_display_id_${uid}`, userProfile.displayId);
+        }
+      }
+    } catch (error) {
+      console.log('Cache update failed, will use old cache:', error);
+    }
+  };
+
   const handleLoginSuccess = async () => {
-    console.log('Login successful');
+    console.log('Login successful - starting navigation process');
+    const startTime = Date.now();
 
     // Listen for auth state change to get the user
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        console.log(`Auth state received in ${Date.now() - startTime}ms`);
         await handleRoleBasedNavigation(user);
+        console.log(`Total navigation time: ${Date.now() - startTime}ms`);
+      } else {
+        console.log('No user received from auth state change');
       }
       unsubscribe(); // Clean up listener
     });
@@ -79,7 +119,9 @@ const AuthPanel: React.FC<AuthPanelProps> = ({ defaultMode = 'login' }) => {
         <div className="auth-body">
           {loading ? (
             <div className="auth-loading">
-              <div>Loading your portal...</div>
+              <div className="loading-spinner"></div>
+              <div>Preparing your dashboard...</div>
+              <div className="loading-subtitle">This may take a moment on first login</div>
             </div>
           ) : (
             <>
