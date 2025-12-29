@@ -34,9 +34,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, isOpen
   const navItems = [
     { id: 'dashboard', icon: 'dashboard', label: 'Dashboard', filled: true },
     { id: 'classes', icon: 'school', label: 'My Classes', filled: true },
-    { id: 'ai-insights', icon: 'auto_awesome', label: 'AI Insights' },
-    { id: 'schedule', icon: 'calendar_month', label: 'Schedule' },
-    { id: 'assignments', icon: 'assignment', label: 'Assignments' },
+    { id: 'exams', icon: 'assignment', label: 'Exams', filled: true },
+    { id: 'study-packs', icon: 'inventory_2', label: 'Study Packs', filled: true },
     { id: 'payroll', icon: 'payments', label: 'Payroll' },
   ];
 

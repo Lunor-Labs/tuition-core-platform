@@ -104,3 +104,5 @@ export const AcademicProgress: React.FC = () => {
   );
 };
 
+
+
