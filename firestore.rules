@@ -1,0 +1,77 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users can read/write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null; // Allow reading other users for profiles
+    }
+
+    // Classes - teacher can manage their own classes, students can read enrolled classes
+    match /classes/{classId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null &&
+        (request.auth.uid == resource.data.teacherId ||
+         request.auth.uid == get(/databases/$(database)/documents/classes/$(classId)).data.teacherId);
+      allow create: if request.auth != null;
+    }
+
+    // Enrollments - student and teacher access
+    match /enrollments/{enrollmentId} {
+      allow read, write: if request.auth != null && (
+        request.auth.uid == resource.data.studentId ||
+        request.auth.uid == resource.data.teacherId
+      );
+      allow create: if request.auth != null;
+    }
+
+    // Study Packs - public read, creator write
+    match /studyPacks/{packId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == resource.data.creatorId;
+      allow create: if request.auth != null;
+    }
+
+    // Assignments - teacher create, students read enrolled courses
+    match /assignments/{assignmentId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == resource.data.creatorId;
+      allow create: if request.auth != null;
+    }
+
+    // Submissions - student and teacher access
+    match /submissions/{submissionId} {
+      allow read, write: if request.auth != null && (
+        request.auth.uid == resource.data.studentId ||
+        request.auth.uid == resource.data.teacherId
+      );
+      allow create: if request.auth != null;
+    }
+
+    // Transactions - user can read/write their own transactions
+    match /transactions/{transactionId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null;
+    }
+
+    // Reviews - public read, authenticated users can create
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+
+    // Notifications - users can read/write their own notifications
+    match /notifications/{notificationId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null;
+    }
+
+    // Counters - only server-side functions can update
+    match /counters/{counterId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Only Cloud Functions can update counters
+    }
+  }
+}

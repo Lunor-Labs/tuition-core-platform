@@ -1,0 +1,12 @@
+# Firebase Configuration - Copy to .env.local and fill in your values
+# Get these from Firebase Console → Project Settings → General → Your apps
+
+VITE_FIREBASE_API_KEY=your_api_key_here
+VITE_FIREBASE_AUTH_DOMAIN=tuition-core-platform-dev.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=tuition-core-platform-dev
+VITE_FIREBASE_STORAGE_BUCKET=tuition-core-platform-dev.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id_here
+VITE_FIREBASE_APP_ID=your_app_id_here
+
+# Firebase Functions URL (for teacher portal backend)
+VITE_FIREBASE_FUNCTIONS_URL=https://us-central1-tuition-core-platform-dev.cloudfunctions.net

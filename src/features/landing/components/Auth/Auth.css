@@ -64,3 +64,12 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.auth-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}

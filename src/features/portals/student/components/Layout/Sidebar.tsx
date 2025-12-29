@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../../../../../shared/services/auth';
 
 interface NavItemProps {
   icon: string;
@@ -29,13 +31,25 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, isOpen = false, onClose }) => {
+  const navigate = useNavigate();
+
   const navItems = [
     { id: 'dashboard', icon: 'dashboard', label: 'Dashboard' },
     { id: 'courses', icon: 'menu_book', label: 'My Courses' },
-    { id: 'schedule', icon: 'calendar_month', label: 'Schedule' },
+    { id: 'studypacks', icon: 'inventory_2', label: 'Study Packs' },
     { id: 'assignments', icon: 'assignment', label: 'Assignments' },
-    { id: 'results', icon: 'show_chart', label: 'Results' },
   ];
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      navigate('/');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Still navigate to home even if logout fails
+      navigate('/');
+    }
+  };
 
   return (
     <>
@@ -94,10 +108,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, isOpen
             <span className="material-symbols-outlined text-[20px]">settings</span>
             <span className="hidden lg:block">Settings</span>
           </a>
-          <a className="flex items-center gap-4 px-4 py-2 rounded-full text-teal-100 hover:text-white transition-colors text-sm" href="#">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-4 px-4 py-2 rounded-full text-teal-100 hover:text-white transition-colors text-sm bg-transparent border-none w-full text-left focus:outline-none"
+          >
             <span className="material-symbols-outlined text-[20px]">logout</span>
             <span className="hidden lg:block">Log Out</span>
-          </a>
+          </button>
         </div>
       </aside>
     </>
