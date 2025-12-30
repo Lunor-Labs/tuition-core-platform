@@ -1,6 +1,10 @@
 import React from 'react';
 import './Channels.css';
 import type { Channel } from '../../types';
+import bgImage from '../../../assets/Bg.jpg';
+import bg2 from '../../../assets/bg2.jpg';
+import bg3 from '../../../assets/bg3.jpg';
+import bg4 from '../../../assets/bg4.jpg';
 
 const Channels: React.FC = () => {
   const channels: Channel[] = [
@@ -9,7 +13,7 @@ const Channels: React.FC = () => {
       year: '2027',
       subject: 'THEORY',
       link: '#',
-      image: '/src/assets/Bg.jpg',
+      image: bgImage,
       description: 'Complete theory coverage for A/L 2027'
     },
     {
@@ -17,7 +21,7 @@ const Channels: React.FC = () => {
       year: '2027',
       subject: 'PHYSICS',
       link: '#',
-      image: '/src/assets/bg2.jpg',
+      image: bg2,
       description: 'Advanced physics concepts and problem solving'
     },
     {
@@ -25,7 +29,7 @@ const Channels: React.FC = () => {
       year: '2027',
       subject: 'CHEMISTRY',
       link: '#',
-      image: '/src/assets/bg3.jpg',
+      image: bg3,
       description: 'Comprehensive chemistry lessons and labs'
     },
     {
@@ -33,7 +37,7 @@ const Channels: React.FC = () => {
       year: '2027',
       subject: 'BIOLOGY',
       link: '#',
-      image: '/src/assets/bg4.jpg',
+      image: bg4,
       description: 'Biology fundamentals and practical sessions'
     }
   ];
