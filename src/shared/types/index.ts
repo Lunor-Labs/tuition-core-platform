@@ -40,5 +40,7 @@ export interface Channel {
   year: string;
   subject: string;
   link: string;
+  image: string;
+  description: string;
 }
 

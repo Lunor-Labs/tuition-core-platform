@@ -8,25 +8,33 @@ const Channels: React.FC = () => {
       id: 1,
       year: '2027',
       subject: 'THEORY',
-      link: '#'
+      link: '#',
+      image: '/src/assets/Bg.jpg',
+      description: 'Complete theory coverage for A/L 2027'
     },
     {
       id: 2,
       year: '2027',
-      subject: 'THEORY',
-      link: '#'
+      subject: 'PHYSICS',
+      link: '#',
+      image: '/src/assets/bg2.jpg',
+      description: 'Advanced physics concepts and problem solving'
     },
     {
       id: 3,
       year: '2027',
-      subject: 'THEORY',
-      link: '#'
+      subject: 'CHEMISTRY',
+      link: '#',
+      image: '/src/assets/bg3.jpg',
+      description: 'Comprehensive chemistry lessons and labs'
     },
     {
       id: 4,
       year: '2027',
-      subject: 'THEORY',
-      link: '#'
+      subject: 'BIOLOGY',
+      link: '#',
+      image: '/src/assets/bg4.jpg',
+      description: 'Biology fundamentals and practical sessions'
     }
   ];
 
@@ -47,22 +55,39 @@ const Channels: React.FC = () => {
         <div className="channels-container">
           {channels.map((channel) => (
             <a href={channel.link} key={channel.id} className="channel-card" target="_blank" rel="noopener noreferrer">
-              <div className="telegram-icon">
-                <svg width="50" height="50" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <linearGradient id="telegram-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor: '#10b981', stopOpacity: 1}} />
-                      <stop offset="50%" style={{stopColor: '#14b8a6', stopOpacity: 1}} />
-                      <stop offset="100%" style={{stopColor: '#34d399', stopOpacity: 1}} />
-                    </linearGradient>
-                  </defs>
-                  <circle cx="30" cy="30" r="30" fill="url(#telegram-gradient)"/>
-                  <path d="M40.5 19.5L17.5 28.5L25.5 31.5L38.5 23.5L28.5 34.5L37.5 40.5L40.5 19.5Z" fill="white"/>
-                  <path d="M25.5 31.5L27 37.5L28.5 34.5L25.5 31.5Z" fill="white"/>
-                </svg>
+              <div className="channel-image-wrapper">
+                <img
+                  src={channel.image}
+                  alt={`${channel.subject} Channel`}
+                  className="channel-image"
+                />
+                <div className="channel-overlay">
+                  <div className="telegram-icon">
+                    <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id={`telegram-gradient-${channel.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style={{stopColor: '#10b981', stopOpacity: 1}} />
+                          <stop offset="50%" style={{stopColor: '#14b8a6', stopOpacity: 1}} />
+                          <stop offset="100%" style={{stopColor: '#34d399', stopOpacity: 1}} />
+                        </linearGradient>
+                      </defs>
+                      <circle cx="30" cy="30" r="30" fill={`url(#telegram-gradient-${channel.id})`}/>
+                      <path d="M40.5 19.5L17.5 28.5L25.5 31.5L38.5 23.5L28.5 34.5L37.5 40.5L40.5 19.5Z" fill="white"/>
+                      <path d="M25.5 31.5L27 37.5L28.5 34.5L25.5 31.5Z" fill="white"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
-              <h3>{channel.year}</h3>
-              <p>{channel.subject}</p>
+              <div className="channel-content">
+                <h3>{channel.year} {channel.subject}</h3>
+                <p className="channel-description">{channel.description}</p>
+                <div className="join-channel">
+                  <span>Join Channel</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
             </a>
           ))}
         </div>
