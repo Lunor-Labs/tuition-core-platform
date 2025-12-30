@@ -6,13 +6,10 @@ import type { TopStudent } from '../../../../shared/types';
 const Topstudent: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('2026 A/L Physics');
 
-  const topStudents: TopStudent[] = [
+  const allStudents: TopStudent[] = [
     { rank: 1, name: 'Yasith Banula', school: 'Sri Sumangala Maha Vidyalaya', marks: 60, image: studentImage },
     { rank: 2, name: 'Yasith Banula', school: 'Sri Sumangala Maha Vidyalaya', marks: 60, image: studentImage },
     { rank: 3, name: 'Yasith Banula', school: 'Sri Sumangala Maha Vidyalaya', marks: 60, image: studentImage },
-  ];
-
-  const remainingStudents: TopStudent[] = [
     { rank: 4, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
     { rank: 5, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
     { rank: 6, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
@@ -20,7 +17,6 @@ const Topstudent: React.FC = () => {
     { rank: 8, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
     { rank: 9, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
     { rank: 10, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
-    { rank: 11, name: 'Yasith Banula', school: '', marks: 60, image: studentImage },
   ];
 
   const filters = ['2026 A/L Physics', '2026 A/L Physics', '2026 A/L Physics'];
@@ -53,40 +49,43 @@ const Topstudent: React.FC = () => {
       {/* Student List Section */}
       <div className="topstudent-list">
         <div className="topstudent-container">
-          {/* Top 3 Students */}
-          <div className="top-students">
-            {topStudents.map((student) => (
-              <div key={student.rank} className="top-student-card">
-                <div className="rank-badge">{String(student.rank).padStart(2, '0')}</div>
-                <div className="student-image-wrapper">
-                  <img 
-                    src={student.image || studentImage} 
-                    alt={student.name}
-                    className="student-profile-image"
-                  />
-                </div>
-                <h3 className="student-name">{student.name}</h3>
-                <p className="student-school">{student.school}</p>
-                <p className="student-marks">Marks {student.marks}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Remaining Students */}
-          <div className="remaining-students">
-            {remainingStudents.map((student) => (
-              <div key={student.rank} className="remaining-student-card">
-                <div className="remaining-card-content">
-                  <div className="student-image-wrapper-small">
-                    <img 
-                      src={student.image || studentImage} 
+          {/* All Students in Single Horizontal Line */}
+          <div className="all-students">
+            {/* Original set */}
+            {allStudents.map((student) => (
+              <div key={student.rank} className="student-card">
+                <div className="card-content">
+                  <div className="student-image-wrapper">
+                    <img
+                      src={student.image || studentImage}
                       alt={student.name}
-                      className="student-profile-image-small"
+                      className="student-profile-image"
                     />
                   </div>
-                  <div className="remaining-card-text">
-                    <h4 className="student-name-small">{student.name}</h4>
-                    <p className="student-marks-small">Marks {student.marks}</p>
+                  <div className="card-text">
+                    <h4 className="student-name">{student.name}</h4>
+                    <p className="student-school">{student.school}</p>
+                    <p className="student-marks">Marks {student.marks}</p>
+                    <p className="student-rank">Rank {String(student.rank).padStart(2, '0')}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* Duplicated set for seamless scrolling */}
+            {allStudents.map((student) => (
+              <div key={`duplicate-${student.rank}`} className="student-card">
+                <div className="card-content">
+                  <div className="student-image-wrapper">
+                    <img
+                      src={student.image || studentImage}
+                      alt={student.name}
+                      className="student-profile-image"
+                    />
+                  </div>
+                  <div className="card-text">
+                    <h4 className="student-name">{student.name}</h4>
+                    <p className="student-school">{student.school}</p>
+                    <p className="student-marks">Marks {student.marks}</p>
                     <p className="student-rank">Rank {String(student.rank).padStart(2, '0')}</p>
                   </div>
                 </div>

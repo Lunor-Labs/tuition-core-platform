@@ -9,7 +9,7 @@ const Teacher: React.FC = () => {
         {/* Left Column - Text Content */}
         <div className="teacher-content">
           <h2 className="teacher-title">
-            <span className="title-part-1">TOTC's</span>
+            <span className="title-part-1">ගුරුවරයා</span>
             <span className="title-part-2"> පිළිබඳව</span>
           </h2>
           <p className="teacher-description">

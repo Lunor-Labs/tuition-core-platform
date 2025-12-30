@@ -1,24 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Navbar.css';
 import { useScroll } from '../../hooks';
 import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const isScrolled = useScroll(50);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
-    closeMenu();
-    
+
     const element = document.getElementById(targetId);
     if (element) {
       // Get navbar height from CSS variable or use default
@@ -48,7 +38,7 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Navigation Links */}
-        <ul className={`navbar-links ${isMenuOpen ? 'mobile-open' : ''}`}>
+        <ul className="navbar-links">
           <li><a href="#home" onClick={(e) => handleSmoothScroll(e, 'home')}>Home</a></li>
           <li><a href="#success" onClick={(e) => handleSmoothScroll(e, 'success')}>Our Success</a></li>
           <li><a href="#process" onClick={(e) => handleSmoothScroll(e, 'process')}>Our Process</a></li>
@@ -64,16 +54,6 @@ const Navbar: React.FC = () => {
           <Link to="/register" className="btn-signup">Sign Up</Link>
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <button 
-          className={`mobile-menu-toggle ${isMenuOpen ? 'active' : ''}`}
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
       </div>
     </nav>
   );

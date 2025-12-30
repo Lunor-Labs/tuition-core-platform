@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { getUserProfile } from '../../../../shared/services/auth';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './Auth.css';
@@ -68,6 +68,15 @@ const AuthPanel: React.FC<AuthPanelProps> = ({ defaultMode = 'login' }) => {
   return (
     <div className="auth-panel">
       <div className="auth-card">
+        <div className="auth-header">
+          <Link to="/" className="back-to-home">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Back to Home
+          </Link>
+        </div>
+
         <div className="auth-brand">
           <div className="logo">TOTC</div>
         </div>

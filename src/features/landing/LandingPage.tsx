@@ -9,7 +9,6 @@ import {
   Topstudent,
   Gallery,
   Reviews,
-  Contact,
 } from './components';
 
 const LandingPage: React.FC = () => {
@@ -25,7 +24,6 @@ const LandingPage: React.FC = () => {
       <Topstudent />
       <Gallery />
       <Reviews />
-      <Contact />
       <Channels />
     </>
   );
