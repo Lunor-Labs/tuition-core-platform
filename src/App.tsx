@@ -1,8 +1,8 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import { LandingPage } from './features/landing'
-import { TeacherPortal } from './features/teacher-portal'
-import { StudentPortal } from './features/student-portal'
+import { TeacherPortal } from './features/portals/teacher'
+import { StudentPortal } from './features/portals/student'
 import LoginPage from './features/landing/pages/LoginPage'
 import RegisterPage from './features/landing/pages/RegisterPage'
 

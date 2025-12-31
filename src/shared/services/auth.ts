@@ -1,155 +1,180 @@
-import { auth } from './firebase';
+import { auth, db } from './firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  signInWithCustomToken,
 } from 'firebase/auth';
-import type { ConfirmationResult, UserCredential } from 'firebase/auth';
-
-// Firebase Cloud Functions base URL
-// Format: https://{region}-{project-id}.cloudfunctions.net
-// Set VITE_FIREBASE_FUNCTIONS_URL in your .env file
-const FIREBASE_FUNCTIONS_URL = 
-  import.meta.env.VITE_FIREBASE_FUNCTIONS_URL || 
-  '';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import type { UserCredential } from 'firebase/auth';
 
 /**
- * Convert mobile number to email format for Firebase Auth (cost-effective - free)
- * Format: +911234567890 -> +911234567890@mobile.local
+ * Register user with email and password
+ * Creates user in Firebase Auth and Firestore
  */
-export function mobileToEmail(mobileNumber: string): string {
-  // Ensure mobile number starts with +
-  const normalized = mobileNumber.startsWith('+') ? mobileNumber : `+${mobileNumber}`;
-  return `${normalized}@mobile.local`;
-}
-
-/**
- * Register user with mobile number and password (cost-effective - uses free Firebase email/password)
- */
-export async function registerWithMobile(mobileNumber: string, password: string) {
-  const email = mobileToEmail(mobileNumber);
-  return createUserWithEmailAndPassword(auth, email, password);
-}
-
-/**
- * Login with mobile number and password (cost-effective - uses free Firebase email/password)
- */
-export async function loginWithMobile(mobileNumber: string, password: string) {
-  const email = mobileToEmail(mobileNumber);
-  return signInWithEmailAndPassword(auth, email, password);
-}
-
-/**
- * Send OTP via Firebase Cloud Functions (cost-effective - can use cheaper SMS providers)
- * This calls your Firebase Cloud Function which handles OTP generation and SMS sending
- */
-export async function sendOtpViaApi(mobileNumber: string): Promise<{ success: boolean; message?: string }> {
-  if (!FIREBASE_FUNCTIONS_URL) {
-    throw new Error('Firebase Functions URL not configured. Set VITE_FIREBASE_FUNCTIONS_URL in your .env file');
-  }
-
+export async function registerWithEmail(
+  email: string,
+  password: string,
+  role: 'student' | 'teacher' = 'student',
+  profile?: { firstName: string; lastName: string }
+): Promise<UserCredential> {
   try {
-    const response = await fetch(`${FIREBASE_FUNCTIONS_URL}/sendOtp`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        mobileNumber: mobileNumber.startsWith('+') ? mobileNumber : `+${mobileNumber}`,
+    // Generate sequential user ID first
+    const userIdResponse = await generateSequentialUserId(role);
+
+    // Create user in Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+    // Create user profile in Firestore with sequential ID
+    const userProfile = {
+      uid: userCredential.user.uid,
+      email: userCredential.user.email,
+      role: role,
+      userId: userIdResponse.userId,
+      displayId: userIdResponse.displayId,
+      displayName: profile ? `${profile.firstName} ${profile.lastName}` : userCredential.user.email,
+      firstName: profile?.firstName || '',
+      lastName: profile?.lastName || '',
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      ...(role === 'student' && {
+        studentProfile: {
+          grade: '',
+          school: '',
+          enrolledCourses: [],
+          totalSessions: 0,
+          averageScore: 0,
+          attendanceRate: 0
+        }
       }),
+      ...(role === 'teacher' && {
+        teacherProfile: {
+          specialization: [],
+          experience: 0,
+          rating: 0,
+          totalStudents: 0,
+          monthlyEarnings: 0,
+          availableBalance: 0,
+          totalEarnings: 0
+        }
+      })
+    };
+
+    // Save to Firestore
+    await setDoc(doc(db, 'users', userCredential.user.uid), userProfile);
+
+    console.log('User registered successfully:', {
+      uid: userCredential.user.uid,
+      displayId: userIdResponse.displayId,
+      role,
+      profile
     });
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'Failed to send OTP' }));
-      throw new Error(error.message || `HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
+    return userCredential;
   } catch (error: any) {
-    throw new Error(error.message || 'Failed to send OTP');
+    console.error('Error registering user:', error);
+    throw new Error(error.message || 'Registration failed');
   }
 }
 
 /**
- * Verify OTP via Firebase Cloud Functions (cost-effective)
- * This calls your Firebase Cloud Function which:
- * 1. Verifies the OTP against stored value
- * 2. Creates/updates user in Firebase using Admin SDK
- * 3. Generates a Firebase custom token
- * 4. Returns { customToken: string }
+ * Generate sequential user ID using Firebase Cloud Function
  */
-export async function verifyOtpViaApi(mobileNumber: string, otp: string): Promise<UserCredential> {
-  if (!FIREBASE_FUNCTIONS_URL) {
-    throw new Error('Firebase Functions URL not configured. Set VITE_FIREBASE_FUNCTIONS_URL in your .env file');
+async function generateSequentialUserId(role: 'student' | 'teacher') {
+  const functionsUrl = import.meta.env.VITE_FIREBASE_FUNCTIONS_URL;
+
+  if (!functionsUrl) {
+    throw new Error('Firebase Functions URL not configured');
   }
 
-  const normalizedMobile = mobileNumber.startsWith('+') ? mobileNumber : `+${mobileNumber}`;
-  
   try {
-    const response = await fetch(`${FIREBASE_FUNCTIONS_URL}/verifyOtp`, {
+    const response = await fetch(`${functionsUrl}/generateUserId`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        mobileNumber: normalizedMobile,
-        otp,
-      }),
+      body: JSON.stringify({ role }),
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'OTP verification failed' }));
+      const error = await response.json().catch(() => ({ message: 'Failed to generate user ID' }));
       throw new Error(error.message || `HTTP error! status: ${response.status}`);
     }
 
     const data = await response.json();
-    
-    // Cloud Function returns customToken - sign in with it
-    if (data.customToken) {
-      return await signInWithCustomToken(auth, data.customToken);
+
+    if (!data.success) {
+      throw new Error(data.message || 'Failed to generate user ID');
     }
-    
-    throw new Error(data.message || 'OTP verification failed - no token received');
+
+    return {
+      userId: data.userId,
+      displayId: data.displayId
+    };
   } catch (error: any) {
-    if (error.message?.includes('HTTP error') || error.message?.includes('Failed to fetch')) {
-      throw new Error('Firebase Functions unavailable. Please check your deployment and VITE_FIREBASE_FUNCTIONS_URL configuration.');
-    }
-    throw new Error(error.message || 'OTP verification failed');
+    console.error('Error generating sequential user ID:', error);
+    // Fallback: generate a temporary ID if function fails
+    const timestamp = Date.now();
+    const fallbackId = role === 'student'
+      ? `STU-${timestamp.toString().slice(-7)}`
+      : `TCH-${timestamp.toString().slice(-4)}`;
+
+    console.warn('Using fallback ID:', fallbackId);
+    return {
+      userId: timestamp,
+      displayId: fallbackId
+    };
   }
 }
 
-// Legacy functions for backward compatibility
-export async function registerWithEmail(email: string, password: string) {
-  return createUserWithEmailAndPassword(auth, email, password);
-}
-
-export async function loginWithEmail(email: string, password: string) {
-  return signInWithEmailAndPassword(auth, email, password);
-}
-
-export function setupRecaptcha(containerId = 'recaptcha-container', size: 'invisible' | 'normal' = 'invisible') {
-  // If already exists, return existing
-  // @ts-ignore
-  if ((window as any).recaptchaVerifier) return (window as any).recaptchaVerifier;
-
-  const verifier = new RecaptchaVerifier(auth, containerId, { size });
-  // render may be needed by some builds; keep reference
-  // @ts-ignore
-  (window as any).recaptchaVerifier = verifier;
-  return verifier;
+/**
+ * Login with email and password
+ */
+export async function loginWithEmail(email: string, password: string): Promise<UserCredential> {
+  try {
+    return await signInWithEmailAndPassword(auth, email, password);
+  } catch (error: any) {
+    console.error('Error logging in:', error);
+    throw new Error(error.message || 'Login failed');
+  }
 }
 
 /**
- * Send OTP using Firebase Phone Auth (more expensive, use as fallback)
- * Consider using sendOtpViaApi for cost-effective solution
+ * Logout user
  */
-export async function sendOtpToPhone(phoneNumber: string, containerId = 'recaptcha-container') {
-  const verifier = setupRecaptcha(containerId, 'invisible');
-  return signInWithPhoneNumber(auth, phoneNumber, verifier) as Promise<ConfirmationResult>;
+export async function logoutUser() {
+  try {
+    await auth.signOut();
+  } catch (error: any) {
+    console.error('Error logging out:', error);
+    throw new Error(error.message || 'Logout failed');
+  }
 }
 
-export async function confirmOtp(confirmationResult: ConfirmationResult, code: string): Promise<UserCredential> {
-  return confirmationResult.confirm(code);
+/**
+ * Get user profile from Firestore
+ */
+export async function getUserProfile(uid: string) {
+  try {
+    const { doc, getDoc } = await import('firebase/firestore');
+
+    // Add timeout to prevent hanging on Vercel
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Profile fetch timeout')), 8000); // 8 second timeout
+    });
+
+    const fetchPromise = getDoc(doc(db, 'users', uid));
+
+    const userDoc = await Promise.race([fetchPromise, timeoutPromise]) as any;
+
+    if (!userDoc.exists()) {
+      throw new Error('User profile not found');
+    }
+
+    const profileData = userDoc.data();
+    console.log('Fetched user profile:', { uid, role: profileData.role, displayId: profileData.displayId });
+
+    return profileData;
+  } catch (error: any) {
+    console.error('Error fetching user profile:', error);
+    throw new Error(error.message || 'Failed to fetch user profile');
+  }
 }

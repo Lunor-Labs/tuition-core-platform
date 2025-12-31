@@ -75,16 +75,16 @@
 .channel-card {
   background-color: #ffffff;
   border-radius: 20px;
-  padding: 2.5rem 2rem;
+  overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   text-align: center;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-decoration: none;
   animation: cardSlideIn 0.6s ease-out backwards;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
 }
 
 .channel-card:nth-child(1) { animation-delay: 0.1s; }
@@ -104,48 +104,102 @@
 }
 
 .channel-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-.telegram-icon {
-  margin-bottom: 1.5rem;
+.channel-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.channel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.channel-card:hover .channel-image {
+  transform: scale(1.05);
+}
+
+.channel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.9) 0%, rgba(20, 184, 166, 0.8) 50%, rgba(52, 211, 153, 0.9) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.channel-card:hover .channel-overlay {
+  opacity: 1;
+}
+
+.telegram-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+}
+
+.channel-card:hover .telegram-icon {
+  transform: scale(1.4);
+}
+
+.channel-content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .channel-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #1e293b;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.75rem 0;
   line-height: 1.3;
 }
 
-.channel-card p {
-  font-size: 1rem;
+.channel-description {
+  font-size: 0.9rem;
   color: #64748b;
-  line-height: 1.6;
-  margin: 0;
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+  flex: 1;
 }
 
-/* Footer Content */
-.footer-content {
-  background-color: #ffffff;
-  padding: 3rem 2rem 2rem 2rem;
-  border-top: 1px solid #e2e8f0;
+.join-channel {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #10b981;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.channel-card:hover .join-channel {
+  color: #059669;
 }
 
 /* Footer Content */
 .footer-content {
-  background-color: #ffffff;
+  background-color: #000000;
   padding: 3rem 2rem 2rem 2rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #374151;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -161,8 +215,9 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-color: #f1f5f9;
-  color: #64748b;
+  background-color: #374151;
+  color: #9ca3af;
+  border: 1px solid #4b5563;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -173,7 +228,9 @@
 .social-icon:hover {
   background-color: #10b981;
   color: white;
+  border-color: #10b981;
   transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
 }
 
 .footer-links {
@@ -185,7 +242,7 @@
 }
 
 .footer-links a {
-  color: #64748b;
+  color: #9ca3af;
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.3s ease;
@@ -196,11 +253,11 @@
 }
 
 .footer-links .separator {
-  color: #cbd5e1;
+  color: #6b7280;
 }
 
 .copyright {
-  color: #94a3b8;
+  color: #6b7280;
   font-size: 0.875rem;
   margin: 0;
 }
@@ -235,19 +292,33 @@
   }
 
   .channel-card {
-    padding: 2rem 1.5rem;
+    height: 350px;
+  }
+
+  .channel-image-wrapper {
+    height: 180px;
+  }
+
+  .channel-content {
+    padding: 1.25rem;
   }
 
   .channel-card h3 {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
 
-  .channel-card p {
-    font-size: 0.9rem;
+  .channel-description {
+    font-size: 0.85rem;
+  }
+
+  .join-channel {
+    font-size: 0.85rem;
   }
 
   .footer-content {
     padding: 2rem 1.5rem 1.5rem 1.5rem;
+    background-color: #000000;
+    border-top-color: #374151;
   }
 
   .footer-links {
@@ -271,6 +342,26 @@
 
   .channels-content {
     padding: 0 1rem 2rem 1rem;
+  }
+
+  .channel-card {
+    height: 320px;
+  }
+
+  .channel-image-wrapper {
+    height: 160px;
+  }
+
+  .channel-content {
+    padding: 1rem;
+  }
+
+  .channel-card h3 {
+    font-size: 1rem;
+  }
+
+  .channel-description {
+    font-size: 0.8rem;
   }
 
   .social-icon {
