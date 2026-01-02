@@ -9,8 +9,8 @@ const Hero: React.FC = () => {
   return (
     <section className="hero" id="home">
       <div className="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-8 lg:py-0">
-        {/* Image Side - Moves down on mobile */}
-        <div className="relative flex justify-center lg:justify-start order-2 lg:order-1 mobile-image-container">
+        {/* Image Side - Shows first on mobile */}
+        <div className="relative flex justify-center lg:justify-start order-1 lg:order-1 mobile-image-container">
           <div className="relative w-[340px] h-[440px] sm:w-[450px] sm:h-[550px] bg-primary blob-shape overflow-hidden flex items-end justify-center shadow-2xl">
             <img
               alt="Tutor teaching a student"
@@ -26,8 +26,8 @@ const Hero: React.FC = () => {
           </svg>
         </div>
 
-        {/* Text Side - Stays at top on mobile */}
-        <div className="order-1 lg:order-2 text-center lg:text-left pt-10 lg:pt-0 relative mobile-text-container">
+        {/* Text Side - Shows second on mobile */}
+        <div className="order-2 lg:order-2 text-center lg:text-left pt-10 lg:pt-0 relative mobile-text-container">
           <div className="absolute -top-12 right-10 lg:right-20 text-gray-200 animate-pulse">
             <span className="material-icons text-6xl">star</span>
           </div>
